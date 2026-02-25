@@ -5,6 +5,8 @@ export type Lesson = {
   duration: string;
   xp: number;
   content: string;
+  readingTime?: string;
+  realWorld?: string;
 };
 
 export type Section = {
@@ -51,6 +53,259 @@ export const COURSES: Course[] = [
     totalXP: 4200,
     sections: [
       // ─────────────────────────────────────────
+      // SECTION 0: SQL Careers in IT
+      // ─────────────────────────────────────────
+      {
+        id: "sql-s0",
+        title: "SQL Careers in IT",
+        description: "Why SQL matters, who uses it, and what your career can look like",
+        lessons: [
+          {
+            id: "sql-l0",
+            title: "Why Every Tech Career Needs SQL",
+            description: "SQL is the language of data — and data is everywhere",
+            duration: "8 min",
+            xp: 50,
+            readingTime: "8 min",
+            realWorld: `## Alex's First Day at Meta
+
+Alex just started as a Junior Data Engineer at Meta. On his very first morning, his manager sends a Slack message:
+
+> "Hey Alex, can you pull the number of new users who signed up in each country last week?"
+
+Alex opens his laptop, connects to the internal MySQL database, and writes:
+
+\`\`\`sql
+SELECT country, COUNT(*) AS new_users
+FROM users
+WHERE signup_date >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+GROUP BY country
+ORDER BY new_users DESC;
+\`\`\`
+
+Within 30 seconds, he has the answer. His manager is impressed.
+
+**That's SQL.** A simple skill that lets you talk to databases and get answers that drive real business decisions — at Meta, at startups, and everywhere in between.
+
+This is what you're learning. Let's go.`,
+            content: `# Why Every Tech Career Needs SQL
+
+You've decided to learn SQL. That's one of the best decisions you can make in tech.
+
+Here's why: **SQL is the language of data**, and data is the backbone of every modern company.
+
+## What Is SQL, Really?
+
+SQL (Structured Query Language) is how you talk to databases. Think of a database as a massive spreadsheet that can hold millions — or billions — of rows. SQL is the tool that lets you ask questions and get answers instantly.
+
+> "How many users signed up last week?" → SQL.
+> "Which products are selling the most?" → SQL.
+> "What's our revenue by region this quarter?" → SQL.
+
+## Who Uses SQL Every Day?
+
+### 1. Data Engineer
+Data Engineers build and maintain the data pipelines that move information around. They write SQL to transform, clean, and load data into warehouses. Companies like Meta, Google, and Amazon have hundreds of data engineers.
+
+**Average salary:** $120,000–$160,000/year
+
+### 2. Data Analyst
+Data Analysts use SQL to dig into data and answer business questions. They write queries to find trends, build reports, and help teams make decisions.
+
+**Average salary:** $70,000–$110,000/year
+
+### 3. Database Administrator (DBA)
+DBAs design and maintain the database systems themselves — making sure they're fast, secure, and always running. SQL is their primary tool.
+
+**Average salary:** $90,000–$130,000/year
+
+### 4. Software Engineer / Backend Developer
+Almost every web app or API talks to a database. Whether you're building a login system or an e-commerce platform, you need SQL to read and write user data.
+
+**Average salary:** $100,000–$150,000/year
+
+### 5. Business Intelligence (BI) Developer
+BI developers create dashboards and reports using tools like Power BI, Tableau, or Looker — all of which run on SQL underneath.
+
+## The Tools That Run on SQL
+
+These are all the major database systems you'll encounter:
+
+| System | Used By |
+|--------|---------|
+| MySQL | Web apps (Instagram, Twitter, Airbnb) |
+| PostgreSQL | Startups, data teams, cloud |
+| SQL Server | Enterprise, Microsoft ecosystem |
+| BigQuery | Google Cloud, data warehouses |
+| Snowflake | Modern data teams |
+| SQLite | Mobile apps, local development |
+
+They all speak SQL. Learn it once, use it everywhere.
+
+## What This Course Will Teach You
+
+By the end of this course, you will:
+
+- Write SELECT queries to retrieve and filter data
+- Use JOINs to combine data from multiple tables
+- Aggregate data with GROUP BY and functions like COUNT, SUM, AVG
+- Design your own database tables
+- Optimize queries for performance
+- Read and write SQL like a professional
+
+You'll go from zero SQL knowledge to writing real queries used at companies like Meta, Amazon, and Netflix.
+
+## A Realistic Timeline
+
+- **Week 1**: SQL Basics — SELECT, WHERE, ORDER BY (Sections 1)
+- **Week 2**: Intermediate SQL — JOINs, GROUP BY, subqueries (Section 2)
+- **Week 3**: Advanced SQL — window functions, CTEs, performance (Section 3)
+- **Week 4**: Database Design — schema design, normalization (Section 4)
+
+Commit 30–60 minutes a day and you'll be writing real SQL confidently within a month.
+
+## Let's Start
+
+The best way to learn SQL is by writing it. Every lesson in this course has interactive exercises where you type real SQL and see results instantly.
+
+No setup required. No downloads. Just open a lesson and start querying.
+
+**You're already ahead of most people just by being here.** Let's go.`,
+          },
+          {
+            id: "sql-l0b",
+            title: "How Databases Work",
+            description: "Tables, rows, columns, and how data is organized",
+            duration: "6 min",
+            xp: 50,
+            readingTime: "6 min",
+            realWorld: `## Alex's Data Model at Meta
+
+When Alex joined Meta's Data Engineering team, one of the first things he had to understand was how the data was organized.
+
+Meta has billions of users. All that user data lives in tables — not one giant file, but dozens of related tables:
+
+- **users** — one row per user, with columns like user_id, name, email, country, signup_date
+- **posts** — one row per post, with columns like post_id, user_id, content, created_at
+- **likes** — one row per like, connecting users to posts
+- **sessions** — one row per login session, tracking activity
+
+When Alex's manager asks "how many users posted at least once this week?", he has to JOIN the users table with the posts table to get the answer.
+
+Understanding how tables relate to each other is the foundation of everything Alex does as a data engineer. And it all starts with the simple concepts in this lesson.`,
+            content: `# How Databases Work
+
+Before you write your first SQL query, let's understand what you're querying.
+
+## What Is a Database?
+
+A database is an organized collection of data stored in a computer. Instead of one big file, data is split into **tables** — each one focused on a specific type of information.
+
+Think of it like a filing cabinet. Each drawer holds a different type of record. Each record is a row. Each piece of information on that record is a column.
+
+## Tables, Rows, and Columns
+
+Every database is made of **tables**. A table is like a spreadsheet:
+
+- **Rows** (also called records) = one entry of data
+- **Columns** (also called fields) = one type of information
+
+### Example: The employees table
+
+| id | name         | department  | salary | hire_date  |
+|----|--------------|-------------|--------|------------|
+| 1  | Alice Smith  | Engineering | 85000  | 2021-03-15 |
+| 2  | Bob Jones    | Marketing   | 62000  | 2020-07-22 |
+| 3  | Carol White  | Engineering | 91000  | 2019-11-01 |
+| 4  | David Lee    | HR          | 58000  | 2022-01-10 |
+
+- The table has **4 rows** (4 employees)
+- The table has **5 columns** (id, name, department, salary, hire_date)
+- Alice Smith is one **row** (record)
+- The **salary** column holds all salary values
+
+## Primary Keys
+
+Every table should have a **primary key** — a column (or combination of columns) that uniquely identifies each row. In the employees table, **id** is the primary key.
+
+- Primary keys are always unique
+- Primary keys are never NULL
+- They're used to link tables together
+
+## Multiple Tables (Relational Databases)
+
+Real databases have multiple tables that are related to each other. Instead of repeating information, you store it once and link to it.
+
+### Example: departments table
+
+| id | name        | location      |
+|----|-------------|---------------|
+| 1  | Engineering | San Francisco |
+| 2  | Marketing   | New York      |
+| 3  | HR          | Chicago       |
+
+The employees table would store a **department_id** (a number) instead of the full department name. This saves space and keeps data consistent.
+
+## How SQL Fits In
+
+SQL is the language you use to:
+
+- **Ask questions** — "Show me all employees in Engineering"
+- **Add data** — "Add a new employee named Sam"
+- **Update data** — "Give Alice a raise"
+- **Delete data** — "Remove the HR department"
+
+Every SQL query you write targets one or more tables in a database.
+
+## Your Practice Database
+
+Throughout this course, you'll practice on a database with these tables:
+
+- **employees** — employee records (id, name, department, salary, hire_date)
+- **departments** — department info (id, name, location, budget)
+- **projects** — project records (id, name, start_date, end_date, status)
+- **employee_projects** — which employees work on which projects
+
+By the end of Section 1, you'll be querying all of these confidently.`,
+          },
+        ],
+        quiz: {
+          id: "sql-q0",
+          questions: [
+            {
+              id: "sq0-q1",
+              type: "MCQ",
+              question: "Which role primarily builds and maintains data pipelines using SQL?",
+              options: ["UX Designer", "Data Engineer", "DevOps Engineer", "Frontend Developer"],
+              correctAnswer: "Data Engineer",
+              explanation: "Data Engineers build pipelines that move, transform, and load data. SQL is their primary tool.",
+            },
+            {
+              id: "sq0-q2",
+              type: "MCQ",
+              question: "In a database table, what does a 'row' represent?",
+              options: ["A type of data (e.g. salary)", "A single entry or record", "A table name", "A database connection"],
+              correctAnswer: "A single entry or record",
+              explanation: "Each row (also called a record) represents one complete entry — like one employee or one order.",
+            },
+            {
+              id: "sq0-q3",
+              type: "MCQ",
+              question: "What is a Primary Key?",
+              options: [
+                "The most important column in a query",
+                "A column that uniquely identifies each row",
+                "The first column in a table",
+                "A special password for the database",
+              ],
+              correctAnswer: "A column that uniquely identifies each row",
+              explanation: "A primary key uniquely identifies each row in a table. It must be unique and cannot be NULL.",
+            },
+          ],
+        },
+      },
+
+      // ─────────────────────────────────────────
       // SECTION 1: SQL Basics
       // ─────────────────────────────────────────
       {
@@ -64,6 +319,33 @@ export const COURSES: Course[] = [
             description: "Introduction to databases and SQL",
             duration: "12 min",
             xp: 50,
+            readingTime: "12 min",
+            realWorld: `## Alex Gets His First Ticket
+
+It's Alex's second week at Meta. His manager drops a ticket in Jira:
+
+> **Task:** Find the top 5 countries where users signed up most in Q1 2024.
+
+Alex opens MySQL Workbench, connects to the analytics database, and thinks for a second. He knows users are stored in a table called \`users\`. He knows each row is one user. He knows there's a \`country\` column and a \`signup_date\` column.
+
+He writes:
+
+\`\`\`sql
+SELECT country, COUNT(*) AS signups
+FROM users
+WHERE signup_date BETWEEN '2024-01-01' AND '2024-03-31'
+GROUP BY country
+ORDER BY signups DESC
+LIMIT 5;
+\`\`\`
+
+The results come back instantly. India, USA, Brazil, Indonesia, Philippines.
+
+He pastes the results into Slack. His manager reacts with a 🔥.
+
+That's what SQL does for you. It takes a question that would take hours to answer manually and answers it in seconds. Alex didn't need to download any data, open Excel, or write any Python. He just wrote one query.
+
+**This is why SQL is the first thing every data professional learns.**`,
             content: `# What is SQL?
 
 SQL (Structured Query Language) is the standard language for managing and querying relational databases. It's one of the most in-demand skills in tech.
@@ -108,6 +390,40 @@ Relational databases store data in multiple tables that can be linked together. 
             description: "How to retrieve data from a table",
             duration: "15 min",
             xp: 50,
+            readingTime: "15 min",
+            realWorld: `## Alex Explores a New Dataset
+
+Alex has been asked to start exploring Meta's internal \`ad_impressions\` table — a massive table that tracks every time an ad is shown to a user.
+
+Before he writes any complex logic, he always starts the same way:
+
+\`\`\`sql
+-- Step 1: What does this table look like?
+SELECT * FROM ad_impressions LIMIT 10;
+\`\`\`
+
+He sees the columns: \`impression_id\`, \`user_id\`, \`ad_id\`, \`country\`, \`device_type\`, \`shown_at\`, \`clicked\`.
+
+\`\`\`sql
+-- Step 2: Just the columns I care about
+SELECT ad_id, country, device_type, clicked
+FROM ad_impressions
+LIMIT 100;
+\`\`\`
+
+\`\`\`sql
+-- Step 3: Rename columns to make the output cleaner
+SELECT
+  ad_id AS "Ad ID",
+  country AS "Country",
+  clicked AS "Was Clicked?"
+FROM ad_impressions
+LIMIT 100;
+\`\`\`
+
+This is Alex's routine every time he encounters a new table: SELECT *, look at the structure, then narrow down to what matters.
+
+**That's the real power of SELECT — it's your first move in any data investigation.**`,
             content: `# The SELECT Statement
 
 The SELECT statement is the most fundamental SQL command. It retrieves data from one or more tables.
@@ -176,6 +492,43 @@ SELECT name AS "Employee Name", salary AS "Salary (USD)" FROM employees;
             description: "Filter rows using conditions",
             duration: "18 min",
             xp: 75,
+            readingTime: "18 min",
+            realWorld: `## Alex Investigates a Drop in Ad Revenue
+
+One Monday morning, Alex's manager sends a Slack message:
+
+> "Revenue from mobile ads dropped 18% last week in Germany. Can you figure out why?"
+
+This is a real investigation. Alex starts with WHERE to slice the data:
+
+\`\`\`sql
+-- Step 1: Look at German mobile ad impressions from last week
+SELECT *
+FROM ad_impressions
+WHERE country = 'DE'
+  AND device_type = 'mobile'
+  AND shown_at >= '2024-03-18'
+  AND shown_at < '2024-03-25'
+LIMIT 50;
+\`\`\`
+
+Something looks off — a lot of these ads have \`clicked = 0\` and \`revenue = 0\`. He narrows further:
+
+\`\`\`sql
+-- Step 2: Show me only the zero-revenue rows
+SELECT ad_id, COUNT(*) AS impressions
+FROM ad_impressions
+WHERE country = 'DE'
+  AND device_type = 'mobile'
+  AND revenue = 0
+  AND shown_at >= '2024-03-18'
+GROUP BY ad_id
+ORDER BY impressions DESC;
+\`\`\`
+
+He finds that one specific ad campaign (ad_id = 8821) accounts for 80% of zero-revenue impressions. He checks — that campaign had a broken landing page URL.
+
+**Without WHERE, Alex would have been staring at millions of rows. WHERE let him zoom in on exactly what was wrong.**`,
             content: `# The WHERE Clause
 
 WHERE filters rows based on a condition. Only rows that satisfy the condition are returned.
@@ -253,6 +606,43 @@ SELECT * FROM employees WHERE name LIKE '%ar%';
             description: "Sort your query results",
             duration: "10 min",
             xp: 50,
+            readingTime: "10 min",
+            realWorld: `## Alex Builds a Daily Revenue Report
+
+Every morning at 9 AM, Alex's team gets a Slack digest of the previous day's top performing ads. Alex built the query that powers it:
+
+\`\`\`sql
+-- Top 10 ads by revenue yesterday
+SELECT
+  ad_id,
+  campaign_name,
+  SUM(revenue) AS total_revenue,
+  COUNT(*) AS impressions
+FROM ad_impressions
+WHERE DATE(shown_at) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+GROUP BY ad_id, campaign_name
+ORDER BY total_revenue DESC
+LIMIT 10;
+\`\`\`
+
+The \`ORDER BY total_revenue DESC\` is critical — without it, the results would come back in random order and the team wouldn't know which ads were actually performing best.
+
+He also built a "worst performers" view:
+
+\`\`\`sql
+-- Lowest revenue ads (to flag for review)
+SELECT
+  ad_id,
+  campaign_name,
+  SUM(revenue) AS total_revenue
+FROM ad_impressions
+WHERE DATE(shown_at) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+GROUP BY ad_id, campaign_name
+ORDER BY total_revenue ASC
+LIMIT 5;
+\`\`\`
+
+**ORDER BY is how you make data tell a story — from best to worst, newest to oldest, A to Z.**`,
             content: `# ORDER BY
 
 ORDER BY sorts your results. Without it, row order is not guaranteed.
@@ -315,6 +705,45 @@ LIMIT 10 OFFSET 10;
             description: "Modify data in your tables",
             duration: "20 min",
             xp: 100,
+            readingTime: "20 min",
+            realWorld: `## Alex Manages a Reference Table
+
+Part of Alex's job is maintaining a \`campaigns\` reference table. This is where all ad campaign metadata lives — names, budgets, statuses, owners.
+
+When a new campaign launches, the marketing team sends Alex a Jira ticket:
+
+> "Please add Campaign #9045 — 'Summer Promo Europe' — budget $50,000, status active, owner sarah@meta.com"
+
+Alex writes:
+
+\`\`\`sql
+INSERT INTO campaigns (campaign_id, name, budget, status, owner_email, created_at)
+VALUES (9045, 'Summer Promo Europe', 50000, 'active', 'sarah@meta.com', NOW());
+\`\`\`
+
+Two weeks later, the budget gets increased:
+
+\`\`\`sql
+-- Always check first with SELECT
+SELECT campaign_id, name, budget FROM campaigns WHERE campaign_id = 9045;
+
+-- Then update
+UPDATE campaigns
+SET budget = 75000
+WHERE campaign_id = 9045;
+\`\`\`
+
+At end of quarter, old campaigns get archived:
+
+\`\`\`sql
+-- Check before deleting
+SELECT COUNT(*) FROM campaigns WHERE status = 'completed' AND created_at < '2024-01-01';
+
+-- Then delete
+DELETE FROM campaigns WHERE status = 'completed' AND created_at < '2024-01-01';
+\`\`\`
+
+**Alex's golden rule: always SELECT before UPDATE or DELETE. One wrong WHERE clause on a production database can ruin your day — and your month.**`,
             content: `# Modifying Data
 
 SQL isn't just for reading data — you can insert, update, and delete rows too.
@@ -389,6 +818,42 @@ DELETE FROM employees WHERE department = 'Temp';
             description: "Handle missing data properly",
             duration: "15 min",
             xp: 75,
+            readingTime: "15 min",
+            realWorld: `## Alex Discovers Why His Averages Are Wrong
+
+Alex is calculating average revenue per ad impression for a weekly report. He runs:
+
+\`\`\`sql
+SELECT AVG(revenue) AS avg_revenue FROM ad_impressions
+WHERE shown_at >= '2024-03-18';
+\`\`\`
+
+The result is $0.34. But his manager says it should be closer to $0.52 based on last week.
+
+Alex digs in. He checks for NULLs:
+
+\`\`\`sql
+SELECT
+  COUNT(*) AS total_rows,
+  COUNT(revenue) AS non_null_revenue,
+  COUNT(*) - COUNT(revenue) AS null_revenue_count
+FROM ad_impressions
+WHERE shown_at >= '2024-03-18';
+\`\`\`
+
+Result: 12,000 rows have NULL revenue. These are impressions where the ad loaded but didn't get a revenue signal (a common tracking issue).
+
+He uses COALESCE to treat NULLs as 0:
+
+\`\`\`sql
+SELECT AVG(COALESCE(revenue, 0)) AS avg_revenue_including_nulls
+FROM ad_impressions
+WHERE shown_at >= '2024-03-18';
+\`\`\`
+
+Now the average is $0.29 — even lower, because he's now including the zero-revenue rows. He reports both numbers and explains the difference to his manager. The root cause was a broken tracking pixel on a landing page.
+
+**NULLs in real data are everywhere. If you don't handle them deliberately, your calculations will silently be wrong.**`,
             content: `# NULL Values
 
 NULL means "no value" or "unknown". It's different from 0 or an empty string ''.
@@ -527,6 +992,44 @@ FROM employees;
             description: "Merge data from multiple tables",
             duration: "25 min",
             xp: 100,
+            readingTime: "25 min",
+            realWorld: `## Alex Links Users to Their Ad Clicks
+
+Alex is asked: "What percentage of users who saw ads last week actually clicked?"
+
+The problem: clicks are in the \`ad_impressions\` table, but user details (like country and age group) are in the \`users\` table. He needs to JOIN them:
+
+\`\`\`sql
+-- How many users clicked at least one ad last week, by country
+SELECT
+  u.country,
+  COUNT(DISTINCT u.user_id) AS users_who_clicked
+FROM users u
+INNER JOIN ad_impressions ai ON u.user_id = ai.user_id
+WHERE ai.clicked = 1
+  AND ai.shown_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+GROUP BY u.country
+ORDER BY users_who_clicked DESC;
+\`\`\`
+
+He also needs to find users who saw ads but never clicked (to understand disengagement):
+
+\`\`\`sql
+-- Users who had impressions but ZERO clicks
+SELECT
+  u.user_id,
+  u.country,
+  COUNT(ai.impression_id) AS impressions_seen
+FROM users u
+LEFT JOIN ad_impressions ai ON u.user_id = ai.user_id AND ai.clicked = 1
+WHERE ai.impression_id IS NULL  -- no matching click
+  AND u.signup_date >= '2024-01-01'
+GROUP BY u.user_id, u.country
+ORDER BY impressions_seen DESC
+LIMIT 100;
+\`\`\`
+
+**JOINs are the most important SQL skill for data engineers. Real data is always spread across multiple tables — JOINs are how you bring it together.**`,
             content: `# SQL JOINs
 
 JOINs combine rows from two or more tables based on a related column.
@@ -591,6 +1094,32 @@ LEFT JOIN employees m ON e.manager_id = m.id;
             description: "Summarize data with COUNT, SUM, AVG, MIN, MAX",
             duration: "20 min",
             xp: 100,
+            readingTime: "20 min",
+            realWorld: `## Alex Builds the Weekly Revenue Dashboard
+
+Every Friday, Alex sends a revenue summary to his team. It's powered by one GROUP BY query:
+
+\`\`\`sql
+SELECT
+  country,
+  device_type,
+  COUNT(*) AS total_impressions,
+  SUM(revenue) AS total_revenue,
+  ROUND(AVG(revenue), 4) AS avg_revenue_per_impression,
+  SUM(clicked) AS total_clicks,
+  ROUND(SUM(clicked) / COUNT(*) * 100, 2) AS click_through_rate_pct
+FROM ad_impressions
+WHERE shown_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+GROUP BY country, device_type
+HAVING total_impressions > 1000   -- only show meaningful segments
+ORDER BY total_revenue DESC;
+\`\`\`
+
+This single query replaces what would have taken hours in Excel. It groups by both country AND device type, so Alex can see "US Mobile" vs "US Desktop" vs "DE Mobile" as separate rows — each with their own revenue total and click rate.
+
+His manager uses this table every week to decide which markets to invest more ad budget in.
+
+**GROUP BY is what turns millions of individual rows into business intelligence. It's the heart of data analysis in SQL.**`,
             content: `# GROUP BY & Aggregate Functions
 
 GROUP BY groups rows that have the same values in specified columns, so you can apply aggregate functions to each group.
@@ -659,6 +1188,47 @@ FROM employees;
             description: "Queries inside queries",
             duration: "22 min",
             xp: 100,
+            readingTime: "22 min",
+            realWorld: `## Alex Finds Above-Average Performing Ads
+
+Alex's team wants to know: which ad campaigns performed above the average revenue per impression for their country?
+
+This requires comparing each row to a calculated average — exactly what subqueries solve:
+
+\`\`\`sql
+-- Find ads that beat their country's average revenue per impression
+SELECT
+  ad_id,
+  campaign_name,
+  country,
+  AVG(revenue) AS this_ad_avg
+FROM ad_impressions
+GROUP BY ad_id, campaign_name, country
+HAVING AVG(revenue) > (
+  -- Subquery: what's the average for this country overall?
+  SELECT AVG(revenue)
+  FROM ad_impressions ai2
+  WHERE ai2.country = ad_impressions.country
+)
+ORDER BY this_ad_avg DESC;
+\`\`\`
+
+He also uses a subquery in the FROM clause to pre-aggregate data before joining:
+
+\`\`\`sql
+-- Get users whose total lifetime ad revenue exceeds $100
+SELECT u.user_id, u.country, rev.total_revenue
+FROM users u
+JOIN (
+  SELECT user_id, SUM(revenue) AS total_revenue
+  FROM ad_impressions
+  GROUP BY user_id
+) AS rev ON u.user_id = rev.user_id
+WHERE rev.total_revenue > 100
+ORDER BY rev.total_revenue DESC;
+\`\`\`
+
+**Subqueries let you use the result of one query as the input to another. They're essential when you need to filter based on an aggregate value.**`,
             content: `# Subqueries
 
 A subquery is a query nested inside another query. They're enclosed in parentheses.
@@ -733,6 +1303,50 @@ WHERE e.salary = (
             description: "Add conditional logic to your queries",
             duration: "18 min",
             xp: 100,
+            readingTime: "18 min",
+            realWorld: `## Alex Segments Users by Engagement Level
+
+Marketing asks Alex to categorize users by how engaged they are with ads — high, medium, or low — based on their click rate.
+
+\`\`\`sql
+SELECT
+  u.user_id,
+  u.country,
+  COUNT(ai.impression_id) AS impressions,
+  SUM(ai.clicked) AS clicks,
+  CASE
+    WHEN COUNT(ai.impression_id) = 0 THEN 'No Exposure'
+    WHEN SUM(ai.clicked) / COUNT(ai.impression_id) >= 0.10 THEN 'High Engagement'
+    WHEN SUM(ai.clicked) / COUNT(ai.impression_id) >= 0.03 THEN 'Medium Engagement'
+    ELSE 'Low Engagement'
+  END AS engagement_level
+FROM users u
+LEFT JOIN ad_impressions ai ON u.user_id = ai.user_id
+  AND ai.shown_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+GROUP BY u.user_id, u.country
+ORDER BY clicks DESC;
+\`\`\`
+
+The result: each user now has an \`engagement_level\` label. Marketing can use this to target high-engagement users with premium campaigns and low-engagement users with re-engagement ads.
+
+Alex also uses CASE to bucket revenue into tiers for a histogram:
+
+\`\`\`sql
+SELECT
+  CASE
+    WHEN revenue = 0 THEN '$0'
+    WHEN revenue < 0.01 THEN '$0–$0.01'
+    WHEN revenue < 0.05 THEN '$0.01–$0.05'
+    WHEN revenue < 0.10 THEN '$0.05–$0.10'
+    ELSE '$0.10+'
+  END AS revenue_bucket,
+  COUNT(*) AS impressions
+FROM ad_impressions
+GROUP BY revenue_bucket
+ORDER BY MIN(revenue);
+\`\`\`
+
+**CASE expressions turn raw numbers into human-readable categories. They're used in almost every data analysis report.**`,
             content: `# CASE Expressions
 
 CASE is SQL's way of writing IF/ELSE logic directly in a query.
@@ -808,6 +1422,52 @@ ORDER BY
             description: "Manipulate text and work with dates",
             duration: "22 min",
             xp: 100,
+            readingTime: "22 min",
+            realWorld: `## Alex Cleans Messy Data and Slices Timestamps
+
+Real data is messy. Alex regularly gets CSV uploads from marketing agencies where:
+- Email addresses have inconsistent casing (ALEX@Meta.com vs alex@meta.com)
+- Campaign names have trailing spaces
+- Dates are stored as strings
+
+Here's how he handles it:
+
+\`\`\`sql
+-- Standardize email addresses before de-duplicating
+SELECT
+  LOWER(TRIM(email)) AS clean_email,
+  COUNT(*) AS occurrences
+FROM imported_contacts
+GROUP BY LOWER(TRIM(email))
+HAVING occurrences > 1;  -- find duplicates
+\`\`\`
+
+For date analysis, Alex constantly slices timestamps:
+
+\`\`\`sql
+-- Revenue by hour of day (to find peak ad performance times)
+SELECT
+  HOUR(shown_at) AS hour_of_day,
+  COUNT(*) AS impressions,
+  SUM(revenue) AS revenue
+FROM ad_impressions
+WHERE DATE(shown_at) = CURDATE() - INTERVAL 1 DAY
+GROUP BY HOUR(shown_at)
+ORDER BY hour_of_day;
+\`\`\`
+
+\`\`\`sql
+-- Week-over-week growth
+SELECT
+  YEARWEEK(shown_at) AS week,
+  SUM(revenue) AS weekly_revenue
+FROM ad_impressions
+GROUP BY YEARWEEK(shown_at)
+ORDER BY week DESC
+LIMIT 8;
+\`\`\`
+
+**String and date functions are the "cleanup crew" of SQL. In real data engineering, you spend 30% of your time just cleaning data — these functions are your tools.**`,
             content: `# String Functions
 
 ## Common String Functions
@@ -960,6 +1620,59 @@ SELECT '2025-01-15'::DATE;  -- PostgreSQL shorthand
             description: "Write cleaner, readable queries with CTEs",
             duration: "20 min",
             xp: 125,
+            readingTime: "20 min",
+            realWorld: `## Alex Refactors a Nightmare Query
+
+Alex inherited a query from a previous engineer. It's 80 lines long, uses 4 nested subqueries, and nobody can read it. His manager asks him to make it maintainable.
+
+Here's what the old version looked like (simplified):
+
+\`\`\`sql
+-- Old: Nested subquery mess
+SELECT country, total_rev, total_users,
+  total_rev / total_users AS rev_per_user
+FROM (
+  SELECT country, SUM(revenue) AS total_rev
+  FROM ad_impressions GROUP BY country
+) r
+JOIN (
+  SELECT country, COUNT(*) AS total_users
+  FROM users GROUP BY country
+) u USING (country)
+WHERE total_users > 500;
+\`\`\`
+
+Alex rewrites it with CTEs:
+
+\`\`\`sql
+-- New: Clean CTEs
+WITH revenue_by_country AS (
+  SELECT country, SUM(revenue) AS total_rev
+  FROM ad_impressions
+  GROUP BY country
+),
+users_by_country AS (
+  SELECT country, COUNT(*) AS total_users
+  FROM users
+  GROUP BY country
+),
+combined AS (
+  SELECT
+    r.country,
+    r.total_rev,
+    u.total_users,
+    r.total_rev / u.total_users AS rev_per_user
+  FROM revenue_by_country r
+  JOIN users_by_country u USING (country)
+  WHERE u.total_users > 500
+)
+SELECT * FROM combined
+ORDER BY rev_per_user DESC;
+\`\`\`
+
+His team can now read every step. When someone asks "what does this query do?", Alex can point to each CTE and explain it in one sentence.
+
+**CTEs are the difference between a query you'll understand in 6 months and one you'll never touch again.**`,
             content: `# Common Table Expressions (CTEs)
 
 CTEs make complex queries more readable using the WITH keyword. Think of them as temporary named result sets.
@@ -1026,6 +1739,52 @@ ORDER BY level, name;
             description: "ROW_NUMBER, RANK, LAG, LEAD, running totals",
             duration: "28 min",
             xp: 150,
+            readingTime: "28 min",
+            realWorld: `## Alex Calculates Week-Over-Week Revenue Growth
+
+Alex's VP asks: "For each week, what was our revenue growth compared to the previous week?"
+
+Without window functions, this would require two subqueries and a self-join. With LAG, it's one clean query:
+
+\`\`\`sql
+WITH weekly_revenue AS (
+  SELECT
+    YEARWEEK(shown_at) AS week,
+    SUM(revenue) AS revenue
+  FROM ad_impressions
+  GROUP BY YEARWEEK(shown_at)
+)
+SELECT
+  week,
+  revenue,
+  LAG(revenue) OVER (ORDER BY week) AS prev_week_revenue,
+  ROUND(
+    (revenue - LAG(revenue) OVER (ORDER BY week))
+    / LAG(revenue) OVER (ORDER BY week) * 100, 1
+  ) AS growth_pct
+FROM weekly_revenue
+ORDER BY week DESC
+LIMIT 12;
+\`\`\`
+
+He also uses RANK to find the top ad per country:
+
+\`\`\`sql
+WITH ranked_ads AS (
+  SELECT
+    country,
+    ad_id,
+    SUM(revenue) AS total_revenue,
+    RANK() OVER (PARTITION BY country ORDER BY SUM(revenue) DESC) AS rnk
+  FROM ad_impressions
+  GROUP BY country, ad_id
+)
+SELECT country, ad_id, total_revenue
+FROM ranked_ads
+WHERE rnk = 1;
+\`\`\`
+
+**Window functions are what separate junior SQL writers from senior data engineers. Once you learn them, you'll wonder how you ever lived without them.**`,
             content: `# Window Functions
 
 Window functions perform calculations across a set of rows related to the current row — without collapsing rows like GROUP BY does.
@@ -1089,6 +1848,36 @@ FROM employees;
             description: "Make your queries blazing fast",
             duration: "30 min",
             xp: 150,
+            readingTime: "30 min",
+            realWorld: `## Alex Fixes a Query That's Killing Production
+
+At 2 PM on a Tuesday, Alex gets a PagerDuty alert: the MySQL database is at 99% CPU. The culprit is one query running every 5 minutes from a dashboard.
+
+He runs EXPLAIN on it:
+
+\`\`\`sql
+EXPLAIN SELECT user_id, SUM(revenue)
+FROM ad_impressions
+WHERE country = 'US'
+  AND shown_at >= '2024-03-01'
+GROUP BY user_id;
+\`\`\`
+
+The output shows: **type: ALL** (full table scan), **rows: 842,000,000**. It's scanning 842 million rows every 5 minutes with no index.
+
+Alex adds a composite index:
+
+\`\`\`sql
+CREATE INDEX idx_country_date ON ad_impressions (country, shown_at);
+\`\`\`
+
+He runs EXPLAIN again. Now: **type: range**, **rows: 1,200,000**. The query now scans 1.2 million rows instead of 842 million — a 700x improvement.
+
+Query time drops from 45 seconds to 0.3 seconds. CPU drops from 99% to 8%. The PagerDuty alert resolves itself.
+
+Alex's manager sends a 🚀 emoji in Slack.
+
+**Indexes are one of the highest-leverage skills in SQL. A well-placed index can turn a minutes-long query into one that runs in milliseconds. At scale, this is the difference between a working product and a crashed one.**`,
             content: `# SQL Indexes & Optimization
 
 Indexes are data structures that speed up data retrieval. Think of them like the index in a book.
@@ -1157,6 +1946,43 @@ SELECT id, name, salary FROM employees WHERE department = 'Engineering';
             description: "Keep your data safe and consistent",
             duration: "20 min",
             xp: 125,
+            readingTime: "20 min",
+            realWorld: `## Alex Prevents a Double-Payment Bug
+
+Meta's ad billing system charges advertisers once per month. A bug report comes in: some advertisers are being charged twice.
+
+Alex investigates. The charge operation involves two steps:
+1. Insert a payment record into \`payments\`
+2. Update the campaign's \`balance\` to 0
+
+If the server crashes between step 1 and step 2, the payment is recorded but the balance isn't cleared. On retry, it charges again.
+
+The fix: wrap it in a transaction:
+
+\`\`\`sql
+START TRANSACTION;
+
+-- Step 1: Record the charge
+INSERT INTO payments (campaign_id, amount, charged_at, status)
+VALUES (9045, 50000.00, NOW(), 'completed');
+
+-- Step 2: Clear the balance
+UPDATE campaigns
+SET balance = 0, last_charged_at = NOW()
+WHERE campaign_id = 9045;
+
+-- Only commit if BOTH steps succeed
+COMMIT;
+
+-- If anything fails between START and COMMIT, rollback:
+-- ROLLBACK;
+\`\`\`
+
+With this transaction, the database guarantees: either BOTH changes happen, or NEITHER does. There's no in-between state.
+
+The double-charge bug is fixed. Alex deploys the fix. No more angry advertiser emails.
+
+**Transactions protect your data from partial failures. In any system that handles money, orders, or critical state changes, they're not optional — they're essential.**`,
             content: `# Transactions & ACID
 
 A transaction is a sequence of SQL operations that are treated as a single unit of work.
@@ -1311,6 +2137,39 @@ SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
             description: "Define schemas with proper data types and constraints",
             duration: "25 min",
             xp: 125,
+            readingTime: "25 min",
+            realWorld: `## Alex Designs a New Analytics Table
+
+Meta's data science team asks Alex to create a new table to store daily user engagement metrics by product feature. They need to track: user, feature, date, time spent, actions taken, and whether they returned the next day.
+
+Alex designs the schema carefully:
+
+\`\`\`sql
+CREATE TABLE feature_engagement (
+  engagement_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id       BIGINT UNSIGNED NOT NULL,
+  feature_name  VARCHAR(100)    NOT NULL,
+  event_date    DATE            NOT NULL,
+  time_spent_sec INT UNSIGNED   NOT NULL DEFAULT 0,
+  action_count  SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  returned_next_day TINYINT(1)  NOT NULL DEFAULT 0,  -- 0 or 1 (boolean)
+  created_at    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  -- Constraints
+  UNIQUE KEY uq_user_feature_date (user_id, feature_name, event_date),
+  INDEX idx_feature_date (feature_name, event_date),
+  INDEX idx_user_date (user_id, event_date)
+);
+\`\`\`
+
+Decisions he made:
+- **BIGINT** for user_id because Meta has billions of users
+- **UNIQUE constraint** on (user_id, feature_name, event_date) to prevent duplicate rows
+- **Indexes** on the columns he'll filter and group by most often
+- **SMALLINT** for action_count (max 32,767) — enough, uses less space than INT
+- **TINYINT(1)** as a boolean flag — standard MySQL pattern
+
+**Schema design is where bugs get prevented or introduced. The constraints and indexes you add at creation time determine how reliable and fast your database will be for years.**`,
             content: `# Creating Tables & Constraints
 
 ## CREATE TABLE
@@ -1389,6 +2248,53 @@ DROP TABLE IF EXISTS temp_table;
             description: "Design clean, efficient database schemas",
             duration: "25 min",
             xp: 150,
+            readingTime: "25 min",
+            realWorld: `## Alex Fixes a Denormalized Mess
+
+When Alex joined, the legacy \`ad_reports\` table looked like this:
+
+\`\`\`
+ad_id | advertiser_name | advertiser_email | campaign_name | campaign_budget | revenue
+------+-----------------+------------------+---------------+----------------+---------
+1001  | Acme Corp       | billing@acme.com | Summer Sale   | 50000          | 340.50
+1002  | Acme Corp       | billing@acme.com | Summer Sale   | 50000          | 120.00
+1003  | Acme Corp       | billing@acme.com | Winter Push   | 30000          | 89.75
+\`\`\`
+
+Problems:
+- Acme Corp's email is repeated thousands of times. If it changes, you have to update thousands of rows.
+- The campaign budget is repeated for every ad. Inconsistency risk is high.
+- Storage is wasted.
+
+Alex normalized it into 3 tables:
+
+\`\`\`sql
+-- Table 1: advertisers (one row per advertiser)
+CREATE TABLE advertisers (
+  advertiser_id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- Table 2: campaigns (one row per campaign)
+CREATE TABLE campaigns (
+  campaign_id INT PRIMARY KEY AUTO_INCREMENT,
+  advertiser_id INT NOT NULL REFERENCES advertisers(advertiser_id),
+  name VARCHAR(255) NOT NULL,
+  budget DECIMAL(12,2) NOT NULL
+);
+
+-- Table 3: ad_reports (one row per ad)
+CREATE TABLE ad_reports (
+  ad_id INT PRIMARY KEY,
+  campaign_id INT NOT NULL REFERENCES campaigns(campaign_id),
+  revenue DECIMAL(10,4) NOT NULL DEFAULT 0
+);
+\`\`\`
+
+Now to get the full picture, you JOIN the tables. But each piece of data is stored exactly once, in the right place.
+
+**Normalization is the principle that prevents databases from turning into unmaintainable swamps. Every professional database schema is built on these ideas.**`,
             content: `# Database Normalization
 
 Normalization is the process of organizing a database to reduce redundancy and improve data integrity.
@@ -1476,6 +2382,62 @@ CREATE TABLE order_items (
             description: "Save and reuse complex queries",
             duration: "20 min",
             xp: 125,
+            readingTime: "20 min",
+            realWorld: `## Alex Gives His Team a Self-Service Dashboard
+
+After months of getting the same data requests ("can you pull revenue by country?", "can you get me user counts for this week?"), Alex creates views so his team can query the data themselves without needing to understand the underlying schema.
+
+\`\`\`sql
+-- View: daily revenue summary (easy for anyone to query)
+CREATE VIEW daily_revenue_summary AS
+SELECT
+  DATE(ai.shown_at) AS report_date,
+  ai.country,
+  ai.device_type,
+  COUNT(*) AS impressions,
+  SUM(ai.revenue) AS total_revenue,
+  SUM(ai.clicked) AS clicks
+FROM ad_impressions ai
+GROUP BY DATE(ai.shown_at), ai.country, ai.device_type;
+\`\`\`
+
+Now any teammate can run:
+
+\`\`\`sql
+SELECT * FROM daily_revenue_summary
+WHERE report_date = CURDATE() - INTERVAL 1 DAY
+  AND country = 'US'
+ORDER BY total_revenue DESC;
+\`\`\`
+
+They don't need to know about \`ad_impressions\` or how to write a GROUP BY. The complexity is hidden inside the view.
+
+Alex also creates a stored procedure to automate the monthly billing report:
+
+\`\`\`sql
+DELIMITER //
+CREATE PROCEDURE GenerateMonthlyBillingReport(IN target_month VARCHAR(7))
+BEGIN
+  SELECT
+    c.campaign_id,
+    c.name AS campaign_name,
+    a.name AS advertiser,
+    SUM(ai.revenue) AS monthly_revenue
+  FROM campaigns c
+  JOIN advertisers a ON c.advertiser_id = a.advertiser_id
+  JOIN ad_reports ar ON ar.campaign_id = c.campaign_id
+  JOIN ad_impressions ai ON ai.ad_id = ar.ad_id
+  WHERE DATE_FORMAT(ai.shown_at, '%Y-%m') = target_month
+  GROUP BY c.campaign_id, c.name, a.name
+  ORDER BY monthly_revenue DESC;
+END //
+DELIMITER ;
+
+-- Call it:
+CALL GenerateMonthlyBillingReport('2024-03');
+\`\`\`
+
+**Views and stored procedures are how data engineers scale their work — instead of writing the same query 50 times, they write it once and share it.**`,
             content: `# Views
 
 A VIEW is a saved SQL query that you can use like a table.

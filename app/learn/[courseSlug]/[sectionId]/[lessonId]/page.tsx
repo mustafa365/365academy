@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { getCourse, getLesson } from "@/lib/courseData";
@@ -7,6 +7,47 @@ import { EXERCISES } from "@/lib/sqlExercises";
 import dynamic from "next/dynamic";
 
 const SqlEditor = dynamic(() => import("@/components/SqlEditor"), { ssr: false });
+
+// ─── Course Timer ──────────────────────────────────────────────────────────────
+
+function CourseTimer({ courseSlug }: { courseSlug: string }) {
+  const [elapsed, setElapsed] = useState("");
+
+  useEffect(() => {
+    const key = `course_start_${courseSlug}`;
+    if (!localStorage.getItem(key)) {
+      localStorage.setItem(key, Date.now().toString());
+    }
+
+    const update = () => {
+      const start = parseInt(localStorage.getItem(key) || "0");
+      const diff = Date.now() - start;
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      if (hours > 0) {
+        setElapsed(`${hours}h ${minutes}m`);
+      } else if (minutes > 0) {
+        setElapsed(`${minutes}m ${seconds}s`);
+      } else {
+        setElapsed(`${seconds}s`);
+      }
+    };
+
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, [courseSlug]);
+
+  if (!elapsed) return null;
+
+  return (
+    <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#3a4a5c]">
+      <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff] animate-pulse inline-block" />
+      {elapsed} in course
+    </div>
+  );
+}
 
 // ─── Markdown renderer ────────────────────────────────────────────────────────
 
@@ -234,6 +275,8 @@ function MarkdownContent({ content }: { content: string }) {
 
 // ─── Page Component ───────────────────────────────────────────────────────────
 
+type Tab = "learn" | "practice" | "realworld";
+
 export default function LessonPage({
   params,
 }: {
@@ -243,6 +286,7 @@ export default function LessonPage({
   const [completed, setCompleted] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [showXP, setShowXP] = useState(false);
+  const [tab, setTab] = useState<Tab>("learn");
 
   const course = getCourse(params.courseSlug);
   const result = getLesson(params.courseSlug, params.lessonId);
@@ -253,6 +297,22 @@ export default function LessonPage({
       .then((r) => r.json())
       .then((d) => setCompleted(d.completed ?? false));
   }, [session, params.lessonId, result]);
+
+  const handleComplete = useCallback(async () => {
+    if (!result) return;
+    setCompleting(true);
+    const res = await fetch("/api/progress", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lessonId: result.lesson.id, xp: result.lesson.xp }),
+    });
+    if (res.ok) {
+      setCompleted(true);
+      setShowXP(true);
+      setTimeout(() => setShowXP(false), 3000);
+    }
+    setCompleting(false);
+  }, [result]);
 
   if (status === "loading") {
     return (
@@ -277,6 +337,8 @@ export default function LessonPage({
   }
 
   const { lesson, section } = result;
+  const hasExercises = !!EXERCISES[lesson.id];
+  const hasRealWorld = !!lesson.realWorld;
 
   const allLessons = course.sections.flatMap((s) =>
     s.lessons.map((l) => ({ ...l, section: s }))
@@ -286,20 +348,11 @@ export default function LessonPage({
   const isLastInSection =
     section.lessons[section.lessons.length - 1]?.id === lesson.id;
 
-  async function handleComplete() {
-    setCompleting(true);
-    const res = await fetch("/api/progress", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lessonId: lesson.id, xp: lesson.xp }),
-    });
-    if (res.ok) {
-      setCompleted(true);
-      setShowXP(true);
-      setTimeout(() => setShowXP(false), 3000);
-    }
-    setCompleting(false);
-  }
+  const tabs: { id: Tab; label: string; icon: string; available: boolean }[] = [
+    { id: "learn", label: "Learn", icon: "📖", available: true },
+    { id: "practice", label: "Practice", icon: "💻", available: hasExercises },
+    { id: "realworld", label: "Real World", icon: "🌍", available: hasRealWorld },
+  ];
 
   return (
     <main className="min-h-screen bg-[#080c10] text-[#e2eaf4]">
@@ -318,8 +371,9 @@ export default function LessonPage({
           >
             ← {course.title}
           </Link>
-          <div className="flex items-center gap-3">
-            <div className="text-[#6b7d95] text-xs font-mono hidden sm:block">
+          <div className="flex items-center gap-4">
+            <CourseTimer courseSlug={course.slug} />
+            <div className="text-[#6b7d95] text-xs font-mono hidden md:block">
               {section.title}
             </div>
             <div
@@ -340,9 +394,16 @@ export default function LessonPage({
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4 flex-wrap">
-            <div className="text-xs font-mono px-3 py-1 rounded-full border text-[#00e5ff] bg-[#00e5ff]/10 border-[#00e5ff]/30">
-              ⏱ {lesson.duration}
-            </div>
+            {lesson.readingTime && (
+              <div className="text-xs font-mono px-3 py-1 rounded-full border text-[#00e5ff] bg-[#00e5ff]/10 border-[#00e5ff]/30">
+                ⏱ {lesson.readingTime} read
+              </div>
+            )}
+            {!lesson.readingTime && (
+              <div className="text-xs font-mono px-3 py-1 rounded-full border text-[#00e5ff] bg-[#00e5ff]/10 border-[#00e5ff]/30">
+                ⏱ {lesson.duration}
+              </div>
+            )}
             {completed && (
               <div className="text-xs font-mono px-3 py-1 rounded-full border text-emerald-400 bg-emerald-400/10 border-emerald-400/30">
                 ✓ Completed
@@ -353,13 +414,33 @@ export default function LessonPage({
           <p className="text-[#6b7d95]">{lesson.description}</p>
         </div>
 
-        {/* Content */}
-        <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-6 md:p-8 mb-8">
-          <MarkdownContent content={lesson.content} />
+        {/* Tabs */}
+        <div className="flex gap-1 mb-6 bg-[#0e1420] border border-[#1e2d42] rounded-xl p-1">
+          {tabs.filter((t) => t.available).map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                tab === t.id
+                  ? "bg-[#00e5ff] text-black"
+                  : "text-[#6b7d95] hover:text-white"
+              }`}
+            >
+              <span>{t.icon}</span>
+              <span>{t.label}</span>
+            </button>
+          ))}
         </div>
 
-        {/* SQL Exercises */}
-        {EXERCISES[lesson.id] && (
+        {/* Tab: Learn */}
+        {tab === "learn" && (
+          <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-6 md:p-8 mb-8">
+            <MarkdownContent content={lesson.content} />
+          </div>
+        )}
+
+        {/* Tab: Practice */}
+        {tab === "practice" && hasExercises && (
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-1 h-6 rounded-full bg-[#00e5ff]" />
@@ -371,6 +452,36 @@ export default function LessonPage({
                 if (!completed) handleComplete();
               }}
             />
+          </div>
+        )}
+
+        {/* Tab: Real World */}
+        {tab === "realworld" && hasRealWorld && (
+          <div className="mb-8">
+            <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl overflow-hidden">
+              {/* Header */}
+              <div className="bg-gradient-to-r from-[#001a2e] to-[#002a3e] border-b border-[#1e2d42] px-6 py-4 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30 flex items-center justify-center text-sm">
+                  👨‍💻
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-white">Alex — Data Engineer at Meta</div>
+                  <div className="text-xs text-[#6b7d95] font-mono">Real world scenario</div>
+                </div>
+                <div className="ml-auto">
+                  <span className="text-xs font-mono px-2 py-1 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/20 text-[#00e5ff]">
+                    // MySQL
+                  </span>
+                </div>
+              </div>
+              {/* Content */}
+              <div className="p-6 md:p-8">
+                <MarkdownContent content={lesson.realWorld!} />
+              </div>
+            </div>
+            <p className="text-xs text-[#3a4a5c] font-mono mt-3 text-center">
+              Alex is a fictional character used to illustrate real-world SQL concepts
+            </p>
           </div>
         )}
 
@@ -453,6 +564,9 @@ export default function LessonPage({
               >
                 <span className="font-mono text-xs w-4">{li + 1}</span>
                 <span className="flex-1">{l.title}</span>
+                {l.readingTime && (
+                  <span className="text-xs font-mono text-[#3a4a5c]">{l.readingTime}</span>
+                )}
                 <span
                   className="text-xs font-mono"
                   style={{ color: course.color }}
