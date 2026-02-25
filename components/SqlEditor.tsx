@@ -56,8 +56,8 @@ export default function SqlEditor({ lessonExercises, onAllComplete }: SqlEditorP
 
     async function initDb() {
       try {
-        // @ts-expect-error – sql.js has no bundled types we rely on
-        const initSqlJs = (await import("sql.js")).default;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const initSqlJs = (await import("sql.js") as any).default;
         const SQL = await initSqlJs({ locateFile: () => "/sql-wasm.wasm" });
         if (cancelled) return;
         sqlJsRef.current = SQL;
