@@ -4,8 +4,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#080c10] text-[#e2eaf4] overflow-x-hidden">
 
+      {/* ANNOUNCEMENT BANNER */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#0e1420] border-b border-[#1e2d42] py-2 px-4 text-center text-xs text-[#6b7d95] font-mono tracking-wide">
+        ✦ &nbsp; 365Academy and all its content is completely free — built to truly serve those willing to learn and grow their tech careers &nbsp; ✦
+      </div>
+
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#1e2d42] bg-[#080c10]/80 backdrop-blur-xl">
+      <nav className="fixed top-8 left-0 right-0 z-40 border-b border-[#1e2d42] bg-[#080c10]/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-[#00e5ff] shadow-[0_0_12px_#00e5ff] animate-pulse" />
@@ -28,7 +33,7 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center pt-16 px-6">
+      <section className="relative min-h-screen flex items-center pt-24 px-6">
         <div
           className="absolute inset-0 opacity-40"
           style={{

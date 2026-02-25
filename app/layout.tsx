@@ -12,9 +12,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <div className="w-full bg-[#00e5ff]/10 border-b border-[#00e5ff]/20 py-2 px-4 text-center text-xs text-[#00e5ff] font-mono tracking-wide">
-          ✦ &nbsp; 365Academy and all its content is completely free — built to truly serve those willing to learn and grow their tech careers. &nbsp; ✦
-        </div>
         <Providers>{children}</Providers>
         <Analytics />
       </body>
