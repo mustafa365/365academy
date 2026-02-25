@@ -3590,11 +3590,11 @@ Her actual approach:
 **Step 2**: Use PowerShell to bulk-create users:
 \`\`\`powershell
 Import-Csv "new_users.csv" | ForEach-Object {
-  New-AzureADUser `
-    -DisplayName $_.Name `
-    -UserPrincipalName $_.Email `
-    -Department $_.Department `
-    -PasswordProfile (New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile `
+  New-AzureADUser \`
+    -DisplayName $_.Name \`
+    -UserPrincipalName $_.Email \`
+    -Department $_.Department \`
+    -PasswordProfile (New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile \`
       -Property @{Password="TempPass2024!"; ForceChangePasswordNextLogin=$true})
 }
 \`\`\`
