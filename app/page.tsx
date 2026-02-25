@@ -138,32 +138,75 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
-            { href: "/courses/sql", emoji: "🗄️", tag: "SQL", title: "SQL from Zero to Hero", desc: "Master databases from scratch. SELECT, JOIN, indexes, and real-world design.", gradient: "from-[#001a2e] via-[#002a3e] to-[#00395a]" },
-            { href: "/courses/azure", emoji: "☁️", tag: "Azure", title: "Azure Admin Zero to Hero", desc: "Go from zero to cloud pro. Full AZ-104 certification prep included.", gradient: "from-[#001020] via-[#001535] to-[#001f4a]" },
+            { href: "/courses/sql", emoji: "🗄️", tag: "SQL", title: "SQL from Zero to Hero", desc: "Master databases from scratch. SELECT, JOIN, indexes, and real-world design.", gradient: "from-[#001a2e] via-[#002a3e] to-[#00395a]", glow: "rgba(0,229,255,0.15)" },
+            { href: "/courses/azure", emoji: "☁️", tag: "Azure", title: "Azure Admin Zero to Hero", desc: "Go from zero to cloud pro. Full AZ-104 certification prep included.", gradient: "from-[#001020] via-[#001535] to-[#001f4a]", glow: "rgba(0,180,255,0.15)" },
           ].map((course, i) => (
             <motion.div
               key={course.tag}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.15, ease }}
+              initial={{ opacity: 0, y: 80, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.9, delay: i * 0.2, ease }}
+              whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
             >
-              <Link href={course.href} className="group block bg-[#0e1420] border border-[#1e2d42] rounded-2xl overflow-hidden hover:border-[#00e5ff]/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(0,229,255,0.08)]">
-                <div className={`h-48 bg-gradient-to-br ${course.gradient} flex items-center justify-center relative overflow-hidden`}>
-                  <motion.span whileHover={{ scale: 1.2, rotate: -5 }} transition={{ type: "spring", stiffness: 300 }} className="text-7xl">
+              <Link href={course.href} className="group block bg-[#0e1420] border border-[#1e2d42] rounded-2xl overflow-hidden relative" style={{ boxShadow: "0 0 0 rgba(0,229,255,0)" }}>
+                {/* Glow border on hover */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ boxShadow: `0 0 40px ${course.glow}, inset 0 0 40px ${course.glow}` }}
+                />
+
+                {/* Card image */}
+                <div className={`h-52 bg-gradient-to-br ${course.gradient} flex items-center justify-center relative overflow-hidden`}>
+                  {/* Animated background shimmer */}
+                  <motion.div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                    style={{ background: `radial-gradient(circle at 50% 50%, ${course.glow} 0%, transparent 70%)` }}
+                  />
+                  <motion.span
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ repeat: Infinity, duration: 3, ease: "easeInOut", delay: i * 0.5 }}
+                    whileHover={{ scale: 1.3, rotate: -8 }}
+                    className="text-7xl relative z-10 drop-shadow-lg"
+                  >
                     {course.emoji}
                   </motion.span>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e1420]/60 to-transparent" />
-                  <div className="absolute bottom-4 left-6 text-xs font-mono text-[#00e5ff] tracking-widest">// {course.tag}</div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e1420]/80 to-transparent" />
+                  <motion.div
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.2 + 0.4 }}
+                    className="absolute bottom-4 left-6 text-xs font-mono text-[#00e5ff] tracking-widest"
+                  >
+                    // {course.tag}
+                  </motion.div>
+                  <div className="absolute top-4 right-4 text-xs font-mono font-bold px-3 py-1 rounded-full border text-emerald-400 bg-emerald-400/10 border-emerald-400/30">
+                    Beginner
+                  </div>
                 </div>
+
+                {/* Card body */}
                 <div className="p-8">
-                  <h3 className="text-2xl font-black mb-3 group-hover:text-[#00e5ff] transition-colors duration-300">{course.title}</h3>
-                  <p className="text-[#6b7d95] text-sm leading-relaxed mb-6">{course.desc}</p>
-                  <div className="flex items-center justify-between">
+                  <motion.h3
+                    className="text-2xl font-black mb-3 transition-colors duration-300 group-hover:text-[#00e5ff]"
+                  >
+                    {course.title}
+                  </motion.h3>
+                  <p className="text-[#6b7d95] text-sm leading-relaxed mb-8">{course.desc}</p>
+                  <div className="flex items-center justify-between border-t border-[#1e2d42] pt-5">
                     <span className="text-3xl font-black text-[#00e5ff]">Free</span>
-                    <span className="flex items-center gap-2 text-sm font-bold text-[#6b7d95] group-hover:text-white group-hover:gap-4 transition-all duration-300">
-                      Start Learning <span>→</span>
-                    </span>
+                    <motion.span
+                      className="flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-xl bg-[#00e5ff]/10 border border-[#00e5ff]/20 text-[#00e5ff] group-hover:bg-[#00e5ff] group-hover:text-black transition-all duration-300"
+                    >
+                      Start Learning
+                      <motion.span
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                      >→</motion.span>
+                    </motion.span>
                   </div>
                 </div>
               </Link>
