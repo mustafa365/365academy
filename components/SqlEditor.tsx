@@ -63,8 +63,8 @@ export default function SqlEditor({ lessonExercises, onAllComplete }: SqlEditorP
         sqlJsRef.current = SQL;
 
         // Create fresh DB and run schema + seed
-        // @ts-expect-error – dynamic import
-        const db = new SQL.Database();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const db = new (SQL as any).Database();
         db.run(lessonExercises.database);
         dbRef.current = db;
         setDbReady(true);
@@ -94,8 +94,8 @@ export default function SqlEditor({ lessonExercises, onAllComplete }: SqlEditorP
     (query: string): QueryResult[] | null => {
       if (!dbRef.current) return null;
       try {
-        // @ts-expect-error – dynamic ref
-        const rawResults = dbRef.current.exec(query);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const rawResults = (dbRef.current as any).exec(query);
         if (!rawResults || rawResults.length === 0) return [];
         return rawResults.map((r: { columns: string[]; values: (string | number | null)[][] }) => ({
           columns: r.columns,
@@ -115,8 +115,8 @@ export default function SqlEditor({ lessonExercises, onAllComplete }: SqlEditorP
 
     setTimeout(() => {
       try {
-        // @ts-expect-error – dynamic ref
-        const rawResults = dbRef.current!.exec(sql);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const rawResults = (dbRef.current as any).exec(sql);
         const queryResult: QueryResult =
           rawResults && rawResults.length > 0
             ? { columns: rawResults[0].columns, rows: rawResults[0].values }
