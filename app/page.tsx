@@ -1,20 +1,22 @@
 "use client";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
-const fadeUp = {
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 60 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
 };
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.12 } },
 };
 
-const letterReveal = {
+const letterReveal: Variants = {
   hidden: { y: "100%", opacity: 0 },
-  show: { y: "0%", opacity: 1, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } },
+  show: { y: "0%", opacity: 1, transition: { duration: 0.9, ease } },
 };
 
 export default function Home() {
@@ -127,7 +129,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease }}
           className="mb-14"
         >
           <p className="text-[#6b7d95] text-xs font-mono tracking-widest uppercase mb-3">// Courses</p>
@@ -144,7 +146,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, delay: i * 0.15, ease }}
             >
               <Link href={course.href} className="group block bg-[#0e1420] border border-[#1e2d42] rounded-2xl overflow-hidden hover:border-[#00e5ff]/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(0,229,255,0.08)]">
                 <div className={`h-48 bg-gradient-to-br ${course.gradient} flex items-center justify-center relative overflow-hidden`}>
