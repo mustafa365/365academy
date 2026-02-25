@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -20,6 +21,9 @@ const letterReveal: Variants = {
 };
 
 export default function Home() {
+  const { data: session } = useSession();
+  const isLoggedIn = !!session?.user;
+
   return (
     <main className="min-h-screen bg-[#080c10] text-[#e2eaf4] overflow-x-hidden">
 
@@ -40,9 +44,15 @@ export default function Home() {
               ❤️ Donate
             </Link>
             <Link href="/courses" className="text-[#6b7d95] hover:text-white text-sm transition-colors">Courses</Link>
-            <Link href="/login" className="bg-[#00e5ff] text-black text-sm font-semibold px-5 py-2 rounded-lg hover:bg-[#00c4db] transition-all hover:-translate-y-0.5">
-              Sign In
-            </Link>
+            {isLoggedIn ? (
+              <Link href="/dashboard" className="bg-[#00e5ff] text-black text-sm font-semibold px-5 py-2 rounded-lg hover:bg-[#00c4db] transition-all hover:-translate-y-0.5">
+                Dashboard →
+              </Link>
+            ) : (
+              <Link href="/login" className="bg-[#00e5ff] text-black text-sm font-semibold px-5 py-2 rounded-lg hover:bg-[#00c4db] transition-all hover:-translate-y-0.5">
+                Sign In
+              </Link>
+            )}
           </div>
         </div>
       </nav>
@@ -78,8 +88,8 @@ export default function Home() {
           </div>
 
           <motion.div variants={fadeUp} className="flex items-center gap-6 flex-wrap">
-            <Link href="/courses" className="group relative inline-flex items-center gap-3 bg-[#00e5ff] text-black font-black px-8 py-4 rounded-xl text-lg overflow-hidden transition-all hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,229,255,0.3)]">
-              <span className="relative z-10">Start Learning</span>
+            <Link href={isLoggedIn ? "/dashboard" : "/courses"} className="group relative inline-flex items-center gap-3 bg-[#00e5ff] text-black font-black px-8 py-4 rounded-xl text-lg overflow-hidden transition-all hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,229,255,0.3)]">
+              <span className="relative z-10">{isLoggedIn ? "Continue Learning" : "Start Learning"}</span>
               <span className="relative z-10 group-hover:translate-x-1 transition-transform">→</span>
             </Link>
             <Link href="/courses" className="text-[#6b7d95] hover:text-white text-sm font-mono transition-colors underline underline-offset-4">

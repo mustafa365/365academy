@@ -441,6 +441,130 @@ export const EXERCISES: Record<string, LessonExercises> = {
       },
     ],
   },
+
+  // Lesson 1 — What is SQL? (explore the database)
+  "sql-l1": {
+    database: MOVIES_DB,
+    exercises: [
+      {
+        id: "l1-e1",
+        prompt: "Run a query to see ALL the data in the movies table. This is your first SQL query!",
+        hint: "Use SELECT * FROM movies;",
+        checkSql: "SELECT * FROM movies;",
+      },
+      {
+        id: "l1-e2",
+        prompt: "Count how many movies are in the database using COUNT(*).",
+        hint: "SELECT COUNT(*) FROM movies;",
+        checkSql: "SELECT COUNT(*) FROM movies;",
+      },
+      {
+        id: "l1-e3",
+        prompt: "Show only the title and year columns for all movies.",
+        hint: "SELECT title, year FROM movies;",
+        checkSql: "SELECT title, year FROM movies;",
+      },
+    ],
+  },
+
+  // Lesson 14 — Indexes (create and verify)
+  "sql-l14": {
+    database: MOVIES_BOXOFFICE_DB,
+    exercises: [
+      {
+        id: "l14-e1",
+        prompt: "Create an index called 'idx_year' on the movies table for the 'year' column. Then select all movies released after 2005.",
+        hint: "CREATE INDEX idx_year ON movies (year); SELECT * FROM movies WHERE year > 2005;",
+        checkSql: "CREATE INDEX idx_year ON movies (year); SELECT * FROM movies WHERE year > 2005 ORDER BY year;",
+      },
+      {
+        id: "l14-e2",
+        prompt: "Create an index called 'idx_director' on the movies table for the 'director' column. Then find all movies by 'John Lasseter'.",
+        hint: "CREATE INDEX idx_director ON movies (director); SELECT * FROM movies WHERE director = 'John Lasseter';",
+        checkSql: "CREATE INDEX idx_director ON movies (director); SELECT * FROM movies WHERE director = 'John Lasseter' ORDER BY year;",
+      },
+    ],
+  },
+
+  // Lesson 15 — Transactions
+  "sql-l15": {
+    database: `
+CREATE TABLE IF NOT EXISTS accounts (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  balance REAL NOT NULL
+);
+INSERT INTO accounts VALUES
+  (1, 'Alice', 1000.00),
+  (2, 'Bob',   500.00),
+  (3, 'Carol', 750.00);
+`,
+    exercises: [
+      {
+        id: "l15-e1",
+        prompt: "Use a transaction to transfer $200 from Alice (id=1) to Bob (id=2). Deduct from Alice, add to Bob, then SELECT all accounts to verify.",
+        hint: "BEGIN; UPDATE accounts SET balance = balance - 200 WHERE id = 1; UPDATE accounts SET balance = balance + 200 WHERE id = 2; COMMIT; SELECT * FROM accounts;",
+        checkSql: "BEGIN; UPDATE accounts SET balance = balance - 200 WHERE id = 1; UPDATE accounts SET balance = balance + 200 WHERE id = 2; COMMIT; SELECT * FROM accounts ORDER BY id;",
+      },
+      {
+        id: "l15-e2",
+        prompt: "Start a transaction, try to give Carol (id=3) a $1000 bonus, then ROLLBACK. Select all accounts — Carol's balance should be unchanged.",
+        hint: "BEGIN; UPDATE accounts SET balance = balance + 1000 WHERE id = 3; ROLLBACK; SELECT * FROM accounts;",
+        checkSql: "BEGIN; UPDATE accounts SET balance = balance + 1000 WHERE id = 3; ROLLBACK; SELECT * FROM accounts ORDER BY id;",
+      },
+    ],
+  },
+
+  // Lesson 16 — Creating Tables & Constraints
+  "sql-l16": {
+    database: `SELECT 1;`,
+    exercises: [
+      {
+        id: "l16-e1",
+        prompt: "Create a table called 'students' with columns: id (INTEGER PRIMARY KEY), name (TEXT NOT NULL), grade (TEXT), score (REAL DEFAULT 0). Then insert one student: (1, 'Ahmed', 'A', 95.5). Select all students.",
+        hint: "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT NOT NULL, grade TEXT, score REAL DEFAULT 0); INSERT INTO students VALUES (1, 'Ahmed', 'A', 95.5); SELECT * FROM students;",
+        checkSql: "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT NOT NULL, grade TEXT, score REAL DEFAULT 0); INSERT INTO students VALUES (1, 'Ahmed', 'A', 95.5); SELECT * FROM students;",
+      },
+      {
+        id: "l16-e2",
+        prompt: "Create a 'products' table with: id (INTEGER PRIMARY KEY), name (TEXT NOT NULL UNIQUE), price (REAL NOT NULL), stock (INTEGER DEFAULT 0). Insert two products: (1, 'Laptop', 999.99, 50) and (2, 'Mouse', 29.99, 200). Select all products ordered by price.",
+        hint: "CREATE TABLE products (...); INSERT INTO products VALUES (...), (...); SELECT * FROM products ORDER BY price;",
+        checkSql: "CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE, price REAL NOT NULL, stock INTEGER DEFAULT 0); INSERT INTO products VALUES (1, 'Laptop', 999.99, 50); INSERT INTO products VALUES (2, 'Mouse', 29.99, 200); SELECT * FROM products ORDER BY price;",
+      },
+    ],
+  },
+
+  // Lesson 17 — Normalization (create related tables)
+  "sql-l17": {
+    database: `SELECT 1;`,
+    exercises: [
+      {
+        id: "l17-e1",
+        prompt: "Create two normalized tables: 'authors' (id INTEGER PRIMARY KEY, name TEXT NOT NULL) and 'books' (id INTEGER PRIMARY KEY, title TEXT NOT NULL, author_id INTEGER). Insert: author (1, 'George Orwell'), books (1, '1984', 1) and (2, 'Animal Farm', 1). Then JOIN to show book title with author name.",
+        hint: "CREATE TABLE authors ...; CREATE TABLE books ...; INSERT ...; SELECT books.title, authors.name FROM books JOIN authors ON books.author_id = authors.id;",
+        checkSql: "CREATE TABLE authors (id INTEGER PRIMARY KEY, name TEXT NOT NULL); CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL, author_id INTEGER); INSERT INTO authors VALUES (1, 'George Orwell'); INSERT INTO books VALUES (1, '1984', 1); INSERT INTO books VALUES (2, 'Animal Farm', 1); SELECT books.title, authors.name FROM books JOIN authors ON books.author_id = authors.id ORDER BY books.title;",
+      },
+    ],
+  },
+
+  // Lesson 18 — Views
+  "sql-l18": {
+    database: MOVIES_BOXOFFICE_DB,
+    exercises: [
+      {
+        id: "l18-e1",
+        prompt: "Create a VIEW called 'top_rated' that shows movie title and rating for movies with rating > 7.5. Then SELECT everything from the view.",
+        hint: "CREATE VIEW top_rated AS SELECT title, rating FROM movies JOIN boxoffice ...; SELECT * FROM top_rated;",
+        checkSql: "CREATE VIEW top_rated AS SELECT title, rating FROM movies JOIN boxoffice ON movies.id = boxoffice.movie_id WHERE rating > 7.5; SELECT * FROM top_rated ORDER BY rating DESC;",
+      },
+      {
+        id: "l18-e2",
+        prompt: "Create a VIEW called 'revenue_summary' that shows each movie's title, year, and total revenue (domestic + international sales). SELECT all from it, ordered by total revenue descending.",
+        hint: "CREATE VIEW revenue_summary AS SELECT title, year, domestic_sales + international_sales AS total_revenue FROM ...; SELECT * FROM revenue_summary ORDER BY total_revenue DESC;",
+        checkSql: "CREATE VIEW revenue_summary AS SELECT title, year, domestic_sales + international_sales AS total_revenue FROM movies JOIN boxoffice ON movies.id = boxoffice.movie_id; SELECT * FROM revenue_summary ORDER BY total_revenue DESC;",
+      },
+    ],
+  },
 };
 
 // ─── Playground preset databases ──────────────────────────────────────────
