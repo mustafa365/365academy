@@ -12,6 +12,13 @@ export default function Home() {
             <span className="font-bold text-lg tracking-tight">365Academy</span>
           </Link>
           <div className="flex items-center gap-8">
+            <Link
+              href="/donate"
+              className="inline-flex items-center gap-2 text-[#f97373] text-sm font-semibold px-3 py-1.5 rounded-full border border-[#f97373]/40 bg-[#f97373]/10 hover:bg-[#f97373]/20 hover:border-[#f97373]/60 transition-all hover:-translate-y-0.5"
+            >
+              <span>❤️</span>
+              <span>Donate</span>
+            </Link>
             <Link href="/courses" className="text-[#6b7d95] hover:text-white text-sm transition-colors">Courses</Link>
             <Link href="/login" className="bg-[#00e5ff] text-black text-sm font-semibold px-5 py-2 rounded-lg hover:bg-[#00c4db] transition-all hover:-translate-y-0.5">
               Sign In
@@ -62,8 +69,8 @@ export default function Home() {
               <div className="text-[#6b7d95] text-sm mt-1">Courses</div>
             </div>
             <div>
-              <div className="text-3xl font-black">$<span className="text-[#00e5ff]">149</span></div>
-              <div className="text-[#6b7d95] text-sm mt-1">Per Course</div>
+              <div className="text-3xl font-black text-[#00e5ff]">Free</div>
+              <div className="text-[#6b7d95] text-sm mt-1">No enrollment fees</div>
             </div>
             <div>
               <div className="text-3xl font-black"><span className="text-[#00e5ff]">∞</span></div>
@@ -108,11 +115,11 @@ export default function Home() {
                 </ul>
                 <div className="flex items-center justify-between pt-5 border-t border-[#1e2d42]">
                   <div>
-                    <div className="text-3xl font-black text-[#00e5ff]">$149</div>
-                    <div className="text-[#6b7d95] text-xs mt-0.5">Lifetime access</div>
+                    <div className="text-3xl font-black text-[#00e5ff]">Free</div>
+                    <div className="text-[#6b7d95] text-xs mt-0.5">Donation-supported</div>
                   </div>
                   <div className="bg-[#00e5ff] text-black font-bold px-6 py-2.5 rounded-lg group-hover:bg-[#00c4db] transition-colors">
-                    Enroll Now →
+                    Start Learning →
                   </div>
                 </div>
               </div>
@@ -144,11 +151,11 @@ export default function Home() {
                 </ul>
                 <div className="flex items-center justify-between pt-5 border-t border-[#1e2d42]">
                   <div>
-                    <div className="text-3xl font-black text-[#00e5ff]">$149</div>
-                    <div className="text-[#6b7d95] text-xs mt-0.5">Lifetime access</div>
+                    <div className="text-3xl font-black text-[#00e5ff]">Free</div>
+                    <div className="text-[#6b7d95] text-xs mt-0.5">Donation-supported</div>
                   </div>
                   <div className="bg-[#00e5ff] text-black font-bold px-6 py-2.5 rounded-lg group-hover:bg-[#00c4db] transition-colors">
-                    Enroll Now →
+                    Start Learning →
                   </div>
                 </div>
               </div>
@@ -167,7 +174,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               { icon: "🎬", title: "YouTube Video Lessons", desc: "High quality video lessons you can watch at your own pace, rewind, and rewatch as many times as you need." },
-              { icon: "♾️", title: "Lifetime Access", desc: "Pay once, access forever. Course materials and any new lessons added in the future — all included." },
+              { icon: "♾️", title: "Lifetime Access", desc: "Always free to access. Course materials and any new lessons added in the future — all included." },
               { icon: "🏆", title: "Beginner Friendly", desc: "No prior experience needed. Ahmed explains everything from scratch in a clear, easy to understand way." },
               { icon: "💼", title: "Career Focused", desc: "SQL and Azure are two of the most in-demand tech skills. Everything you learn applies directly to real jobs." },
               { icon: "📋", title: "Cert Prep Included", desc: "The Azure course covers everything for the AZ-104 exam. The SQL course prepares you for real interviews." },
@@ -285,9 +292,9 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
             Ready to start your<br /><span className="text-[#00e5ff]">tech career?</span>
           </h2>
-          <p className="text-[#6b7d95] mb-10 text-lg leading-relaxed">Join students already learning SQL and Azure with Ahmed. One payment, lifetime access.</p>
+          <p className="text-[#6b7d95] mb-10 text-lg leading-relaxed">Join students already learning SQL and Azure with Ahmed. 365Academy is free to access, supported by donations from learners like you.</p>
           <Link href="/courses" className="inline-flex items-center gap-2 bg-[#00e5ff] text-black font-semibold px-10 py-4 rounded-lg text-lg hover:bg-[#00c4db] transition-all hover:-translate-y-0.5 shadow-[0_0_30px_rgba(0,229,255,0.25)]">
-            Browse Courses — $149 each →
+            Browse Free Courses →
           </Link>
         </div>
       </section>
