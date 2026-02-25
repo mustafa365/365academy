@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd C:\\\\Users\\\\Mustafa\\\\OneDrive\\\\Desktop\\\\learnwithahmed:*)",
+      "Bash(cd \"C:\\\\Users\\\\Mustafa\\\\OneDrive\\\\Desktop\\\\learnwithahmed\" && npx prisma db push 2>&1)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(node:*)",
+      "Bash(cd \"C:\\\\Users\\\\Mustafa\\\\OneDrive\\\\Desktop\\\\learnwithahmed\" && node_modules/.bin/prisma --version 2>&1)",
+      "Bash(cat:*)",
+      "Bash(cd \"/c/Users/Mustafa/OneDrive/Desktop/learnwithahmed\" && git add . && git commit -m \"Initial commit - 365Academy website\" 2>&1)"
+    ]
+  }
+}

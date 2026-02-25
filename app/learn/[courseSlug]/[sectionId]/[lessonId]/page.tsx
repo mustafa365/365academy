@@ -1,0 +1,468 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { getCourse, getLesson } from "@/lib/courseData";
+import { EXERCISES } from "@/lib/sqlExercises";
+import dynamic from "next/dynamic";
+
+const SqlEditor = dynamic(() => import("@/components/SqlEditor"), { ssr: false });
+
+// ─── Markdown renderer ────────────────────────────────────────────────────────
+
+function renderInline(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
+    .replace(/`([^`]+)`/g, '<code class="bg-[#080c10] border border-[#1e2d42] text-[#00e5ff] px-1.5 py-0.5 rounded text-xs font-mono">$1</code>')
+    .replace(/\*(.+?)\*/g, "<em>$1</em>");
+}
+
+function MarkdownContent({ content }: { content: string }) {
+  const lines = content.split("\n");
+  const elements: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // Fenced code block
+    if (line.trimStart().startsWith("```")) {
+      const lang = line.trim().replace(/^```/, "").trim();
+      const codeLines: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].trimStart().startsWith("```")) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      i++; // skip closing ```
+      elements.push(
+        <div key={`code-${i}`} className="my-5">
+          {lang && (
+            <div className="flex items-center gap-2 bg-[#0a1219] border border-[#1e2d42] border-b-0 rounded-t-xl px-4 py-2">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+                <div className="w-3 h-3 rounded-full bg-green-500/50" />
+              </div>
+              <span className="text-[#3a4a5c] text-xs font-mono ml-1">{lang}</span>
+            </div>
+          )}
+          <pre
+            className={`bg-[#060a0e] border border-[#1e2d42] ${
+              lang ? "rounded-b-xl rounded-tr-xl" : "rounded-xl"
+            } p-5 overflow-x-auto`}
+          >
+            <code className="text-[#a8d8ea] font-mono text-sm leading-relaxed whitespace-pre">
+              {codeLines.join("\n")}
+            </code>
+          </pre>
+        </div>
+      );
+      continue;
+    }
+
+    // H1
+    if (line.startsWith("# ")) {
+      elements.push(
+        <h1 key={i} className="text-2xl font-black text-white mt-8 mb-3 first:mt-0">
+          {line.slice(2)}
+        </h1>
+      );
+      i++;
+      continue;
+    }
+    // H2
+    if (line.startsWith("## ")) {
+      elements.push(
+        <h2 key={i} className="text-xl font-bold text-[#e2eaf4] mt-6 mb-2 border-b border-[#1e2d42] pb-2">
+          {line.slice(3)}
+        </h2>
+      );
+      i++;
+      continue;
+    }
+    // H3
+    if (line.startsWith("### ")) {
+      elements.push(
+        <h3 key={i} className="text-base font-bold text-[#00e5ff] mt-4 mb-1">
+          {line.slice(4)}
+        </h3>
+      );
+      i++;
+      continue;
+    }
+
+    // Horizontal rule
+    if (line.trim() === "---" || line.trim() === "***") {
+      elements.push(<hr key={i} className="border-[#1e2d42] my-5" />);
+      i++;
+      continue;
+    }
+
+    // Markdown table
+    if (line.includes("|") && lines[i + 1]?.includes("---")) {
+      const tableLines: string[] = [];
+      while (i < lines.length && lines[i].includes("|")) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      const headers = tableLines[0]
+        .split("|")
+        .map((h) => h.trim())
+        .filter(Boolean);
+      const rows = tableLines.slice(2).map((row) =>
+        row
+          .split("|")
+          .map((c) => c.trim())
+          .filter(Boolean)
+      );
+      elements.push(
+        <div key={`table-${i}`} className="overflow-x-auto my-5">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b border-[#1e2d42]">
+                {headers.map((h, hi) => (
+                  <th
+                    key={hi}
+                    className="text-left py-2 px-3 text-[#00e5ff] font-mono text-xs uppercase tracking-wider"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, ri) => (
+                <tr
+                  key={ri}
+                  className="border-b border-[#1e2d42]/50 hover:bg-[#080c10]/50 transition-colors"
+                >
+                  {row.map((cell, ci) => (
+                    <td
+                      key={ci}
+                      className="py-2 px-3 text-[#b8c5d6]"
+                      dangerouslySetInnerHTML={{ __html: renderInline(cell) }}
+                    />
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+      continue;
+    }
+
+    // Bullet list
+    if (line.startsWith("- ") || line.startsWith("* ")) {
+      const listItems: string[] = [];
+      while (
+        i < lines.length &&
+        (lines[i].startsWith("- ") || lines[i].startsWith("* "))
+      ) {
+        listItems.push(lines[i].slice(2));
+        i++;
+      }
+      elements.push(
+        <ul key={`ul-${i}`} className="my-3 space-y-1.5">
+          {listItems.map((item, li) => (
+            <li key={li} className="flex items-start gap-2.5 text-sm text-[#b8c5d6]">
+              <span className="text-[#00e5ff] mt-0.5 flex-shrink-0 font-bold">•</span>
+              <span dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+            </li>
+          ))}
+        </ul>
+      );
+      continue;
+    }
+
+    // Numbered list
+    if (/^\d+\.\s/.test(line)) {
+      const listItems: string[] = [];
+      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+        listItems.push(lines[i].replace(/^\d+\.\s/, ""));
+        i++;
+      }
+      elements.push(
+        <ol key={`ol-${i}`} className="my-3 space-y-1.5">
+          {listItems.map((item, li) => (
+            <li key={li} className="flex items-start gap-2.5 text-sm text-[#b8c5d6]">
+              <span className="text-[#7c3aed] font-mono font-bold flex-shrink-0 min-w-[1.2rem]">
+                {li + 1}.
+              </span>
+              <span dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+            </li>
+          ))}
+        </ol>
+      );
+      continue;
+    }
+
+    // Blockquote
+    if (line.startsWith("> ")) {
+      elements.push(
+        <blockquote
+          key={i}
+          className="border-l-4 border-[#00e5ff]/50 pl-4 my-3 italic text-[#6b7d95] text-sm"
+        >
+          {line.slice(2)}
+        </blockquote>
+      );
+      i++;
+      continue;
+    }
+
+    // Empty line — skip
+    if (line.trim() === "") {
+      i++;
+      continue;
+    }
+
+    // Paragraph
+    elements.push(
+      <p
+        key={i}
+        className="text-sm text-[#b8c5d6] leading-relaxed my-2"
+        dangerouslySetInnerHTML={{ __html: renderInline(line) }}
+      />
+    );
+    i++;
+  }
+
+  return <div className="space-y-1">{elements}</div>;
+}
+
+// ─── Page Component ───────────────────────────────────────────────────────────
+
+export default function LessonPage({
+  params,
+}: {
+  params: { courseSlug: string; sectionId: string; lessonId: string };
+}) {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [completed, setCompleted] = useState(false);
+  const [completing, setCompleting] = useState(false);
+  const [showXP, setShowXP] = useState(false);
+
+  const course = getCourse(params.courseSlug);
+  const result = getLesson(params.courseSlug, params.lessonId);
+
+  useEffect(() => {
+    if (status === "unauthenticated") router.push("/login");
+  }, [status, router]);
+
+  useEffect(() => {
+    if (!session?.user?.id || !result) return;
+    fetch(`/api/progress?lessonId=${params.lessonId}`)
+      .then((r) => r.json())
+      .then((d) => setCompleted(d.completed ?? false));
+  }, [session, params.lessonId, result]);
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-[#080c10] flex items-center justify-center">
+        <div className="w-2 h-2 rounded-full bg-[#00e5ff] animate-pulse" />
+      </div>
+    );
+  }
+
+  if (!course || !result) {
+    return (
+      <div className="min-h-screen bg-[#080c10] text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-4xl mb-4">🔍</div>
+          <p className="text-[#6b7d95]">Lesson not found.</p>
+          <Link href="/dashboard" className="text-[#00e5ff] text-sm mt-3 block hover:underline">
+            Back to Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const { lesson, section } = result;
+
+  const allLessons = course.sections.flatMap((s) =>
+    s.lessons.map((l) => ({ ...l, section: s }))
+  );
+  const currentIdx = allLessons.findIndex((l) => l.id === lesson.id);
+  const nextLesson = allLessons[currentIdx + 1];
+  const isLastInSection =
+    section.lessons[section.lessons.length - 1]?.id === lesson.id;
+
+  async function handleComplete() {
+    setCompleting(true);
+    const res = await fetch("/api/progress", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lessonId: lesson.id, xp: lesson.xp }),
+    });
+    if (res.ok) {
+      setCompleted(true);
+      setShowXP(true);
+      setTimeout(() => setShowXP(false), 3000);
+    }
+    setCompleting(false);
+  }
+
+  return (
+    <main className="min-h-screen bg-[#080c10] text-[#e2eaf4]">
+      {showXP && (
+        <div className="fixed top-24 right-6 z-50 bg-[#00e5ff] text-black font-black px-6 py-3 rounded-xl shadow-lg animate-bounce">
+          +{lesson.xp} XP! 🎉
+        </div>
+      )}
+
+      {/* Nav */}
+      <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[#1e2d42] bg-[#080c10]/90 backdrop-blur-xl">
+        <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link
+            href={`/courses/${course.slug}`}
+            className="flex items-center gap-2 text-[#6b7d95] hover:text-white text-sm transition-colors"
+          >
+            ← {course.title}
+          </Link>
+          <div className="flex items-center gap-3">
+            <div className="text-[#6b7d95] text-xs font-mono hidden sm:block">
+              {section.title}
+            </div>
+            <div
+              className="text-xs font-mono px-2 py-1 rounded border"
+              style={{
+                color: course.color,
+                borderColor: course.color + "40",
+                background: course.color + "10",
+              }}
+            >
+              +{lesson.xp} XP
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div className="pt-24 pb-24 px-4 max-w-3xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4 flex-wrap">
+            <div className="text-xs font-mono px-3 py-1 rounded-full border text-[#00e5ff] bg-[#00e5ff]/10 border-[#00e5ff]/30">
+              ⏱ {lesson.duration}
+            </div>
+            {completed && (
+              <div className="text-xs font-mono px-3 py-1 rounded-full border text-emerald-400 bg-emerald-400/10 border-emerald-400/30">
+                ✓ Completed
+              </div>
+            )}
+          </div>
+          <h1 className="text-3xl font-black tracking-tight mb-2">{lesson.title}</h1>
+          <p className="text-[#6b7d95]">{lesson.description}</p>
+        </div>
+
+        {/* Content */}
+        <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-6 md:p-8 mb-8">
+          <MarkdownContent content={lesson.content} />
+        </div>
+
+        {/* SQL Exercises */}
+        {EXERCISES[lesson.id] && (
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-1 h-6 rounded-full bg-[#00e5ff]" />
+              <h2 className="text-lg font-black tracking-tight">Practice Exercises</h2>
+            </div>
+            <SqlEditor
+              lessonExercises={EXERCISES[lesson.id]}
+              onAllComplete={() => {
+                if (!completed) handleComplete();
+              }}
+            />
+          </div>
+        )}
+
+        {/* Complete button */}
+        <div className="flex items-center gap-3">
+          {!completed ? (
+            <button
+              onClick={handleComplete}
+              disabled={completing}
+              className="flex-1 bg-[#00e5ff] text-black font-bold py-4 rounded-xl hover:bg-[#00c4db] transition-all disabled:opacity-50 text-base"
+            >
+              {completing ? "Saving..." : `✓ Mark Complete (+${lesson.xp} XP)`}
+            </button>
+          ) : (
+            <div className="flex-1 bg-emerald-400/10 border border-emerald-400/30 text-emerald-400 font-bold py-4 rounded-xl text-center text-base">
+              ✓ Lesson Complete!
+            </div>
+          )}
+        </div>
+
+        {/* Navigation after complete */}
+        {completed && (
+          <div className="mt-4 space-y-3">
+            {isLastInSection && (
+              <Link
+                href={`/quiz/${section.quiz.id}?course=${course.slug}&section=${section.id}`}
+                className="w-full flex items-center justify-center gap-2 bg-[#7c3aed] text-white font-bold py-3.5 rounded-xl hover:bg-[#6d28d9] transition-all"
+              >
+                🎯 Take Section Quiz →
+              </Link>
+            )}
+            {nextLesson && !isLastInSection && (
+              <Link
+                href={`/learn/${course.slug}/${nextLesson.section.id}/${nextLesson.id}`}
+                className="w-full flex items-center justify-center gap-2 text-black font-bold py-3.5 rounded-xl transition-all hover:opacity-90"
+                style={{ background: course.color }}
+              >
+                Next: {nextLesson.title} →
+              </Link>
+            )}
+            {nextLesson && isLastInSection && (
+              <Link
+                href={`/learn/${course.slug}/${nextLesson.section.id}/${nextLesson.id}`}
+                className="w-full flex items-center justify-center gap-2 border border-[#1e2d42] text-[#6b7d95] font-medium py-3 rounded-xl hover:border-[#00e5ff]/40 hover:text-white transition-all text-sm"
+              >
+                Skip to next section →
+              </Link>
+            )}
+            {!nextLesson && (
+              <Link
+                href={`/courses/${course.slug}`}
+                className="w-full flex items-center justify-center gap-2 bg-[#7c3aed] text-white font-bold py-3.5 rounded-xl hover:bg-[#6d28d9] transition-all"
+              >
+                🎉 Back to Course Overview →
+              </Link>
+            )}
+          </div>
+        )}
+
+        {/* Section lesson list */}
+        <div className="mt-10 pt-6 border-t border-[#1e2d42]">
+          <p className="text-xs font-mono text-[#6b7d95] mb-3">// {section.title}</p>
+          <div className="space-y-1">
+            {section.lessons.map((l, li) => (
+              <Link
+                key={l.id}
+                href={`/learn/${course.slug}/${section.id}/${l.id}`}
+                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-colors ${
+                  l.id === lesson.id
+                    ? "bg-[#00e5ff]/10 border border-[#00e5ff]/30 text-[#00e5ff]"
+                    : "hover:bg-[#0e1420] text-[#6b7d95] hover:text-white"
+                }`}
+              >
+                <span className="font-mono text-xs w-4">{li + 1}</span>
+                <span className="flex-1">{l.title}</span>
+                <span
+                  className="text-xs font-mono"
+                  style={{ color: course.color }}
+                >
+                  +{l.xp} XP
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
