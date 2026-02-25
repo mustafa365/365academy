@@ -1,4 +1,21 @@
+"use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 60 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+};
+
+const letterReveal = {
+  hidden: { y: "100%", opacity: 0 },
+  show: { y: "0%", opacity: 1, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export default function Home() {
   return (
@@ -6,7 +23,7 @@ export default function Home() {
 
       {/* ANNOUNCEMENT BANNER */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-[#0e1420] border-b border-[#1e2d42] py-2 px-4 text-center text-xs text-[#6b7d95] font-mono tracking-wide">
-        ✦ &nbsp; 365Academy and all its content is completely free — built to truly serve those willing to learn and grow their tech careers &nbsp; ✦
+        ✦ &nbsp; 365Academy is completely free — built to serve those willing to learn and grow their tech careers &nbsp; ✦
       </div>
 
       {/* NAV */}
@@ -17,12 +34,8 @@ export default function Home() {
             <span className="font-bold text-lg tracking-tight">365Academy</span>
           </Link>
           <div className="flex items-center gap-8">
-            <Link
-              href="/donate"
-              className="inline-flex items-center gap-2 text-[#f97373] text-sm font-semibold px-3 py-1.5 rounded-full border border-[#f97373]/40 bg-[#f97373]/10 hover:bg-[#f97373]/20 hover:border-[#f97373]/60 transition-all hover:-translate-y-0.5"
-            >
-              <span>❤️</span>
-              <span>Donate</span>
+            <Link href="/donate" className="inline-flex items-center gap-2 text-[#f97373] text-sm font-semibold px-3 py-1.5 rounded-full border border-[#f97373]/40 bg-[#f97373]/10 hover:bg-[#f97373]/20 transition-all">
+              ❤️ Donate
             </Link>
             <Link href="/courses" className="text-[#6b7d95] hover:text-white text-sm transition-colors">Courses</Link>
             <Link href="/login" className="bg-[#00e5ff] text-black text-sm font-semibold px-5 py-2 rounded-lg hover:bg-[#00c4db] transition-all hover:-translate-y-0.5">
@@ -33,107 +46,138 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center pt-24 px-6">
-        <div
-          className="absolute inset-0 opacity-40"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px",
-            maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent)",
-          }}
-        />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-purple-700/10 blur-[80px] pointer-events-none" />
+      <section className="relative min-h-screen flex flex-col items-start justify-center pt-24 px-6 md:px-16 max-w-7xl mx-auto">
+        <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+          backgroundImage: "linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+          maskImage: "radial-gradient(ellipse 80% 80% at 30% 50%, black, transparent)",
+        }} />
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-[#00e5ff]/5 blur-[120px] pointer-events-none" />
 
-        <div className="relative max-w-6xl mx-auto w-full">
-          <div className="inline-flex items-center gap-2 bg-[#00e5ff]/8 border border-[#00e5ff]/20 text-[#00e5ff] px-4 py-1.5 rounded-full text-xs font-mono mb-8">
-            ✦ &nbsp;Beginner friendly — no experience needed
+        <motion.div variants={stagger} initial="hidden" animate="show" className="relative z-10 w-full">
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-2 bg-[#00e5ff]/8 border border-[#00e5ff]/20 text-[#00e5ff] px-4 py-1.5 rounded-full text-xs font-mono mb-10">
+            ✦ &nbsp; Free forever. No credit card. No catch.
+          </motion.div>
+
+          <div className="overflow-hidden mb-2">
+            <motion.h1 variants={letterReveal} className="text-[clamp(4rem,14vw,12rem)] font-black tracking-tighter leading-none text-white">
+              LEARN
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden mb-2">
+            <motion.h1 variants={letterReveal} className="text-[clamp(4rem,14vw,12rem)] font-black tracking-tighter leading-none text-[#00e5ff]">
+              SQL &amp;
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden mb-12">
+            <motion.h1 variants={letterReveal} className="text-[clamp(4rem,14vw,12rem)] font-black tracking-tighter leading-none text-[#6b7d95]">
+              AZURE.
+            </motion.h1>
           </div>
 
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-6">
-            <span className="text-[#6b7d95] block">Master</span>
-            <span className="text-[#00e5ff] block">SQL &</span>
-            <span className="text-white block">Azure.</span>
-          </h1>
-
-          <p className="text-[#6b7d95] text-lg max-w-lg leading-relaxed mb-10">
-            Two career-changing courses taught by Ahmed. Go from zero experience to job-ready skills — at your own pace, with lifetime access.
-          </p>
-
-          <div className="flex gap-4 flex-wrap mb-16">
-            <Link href="/courses" className="inline-flex items-center gap-2 bg-[#00e5ff] text-black font-semibold px-7 py-3.5 rounded-lg hover:bg-[#00c4db] transition-all hover:-translate-y-0.5 shadow-[0_0_30px_rgba(0,229,255,0.25)]">
-              View Courses →
+          <motion.div variants={fadeUp} className="flex items-center gap-6 flex-wrap">
+            <Link href="/courses" className="group relative inline-flex items-center gap-3 bg-[#00e5ff] text-black font-black px-8 py-4 rounded-xl text-lg overflow-hidden transition-all hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,229,255,0.3)]">
+              <span className="relative z-10">Start Learning</span>
+              <span className="relative z-10 group-hover:translate-x-1 transition-transform">→</span>
             </Link>
-            <Link href="/login" className="inline-flex items-center gap-2 border border-[#1e2d42] text-white font-semibold px-7 py-3.5 rounded-lg hover:bg-[#0e1420] transition-all">
-              Sign In Free
+            <Link href="/courses" className="text-[#6b7d95] hover:text-white text-sm font-mono transition-colors underline underline-offset-4">
+              Browse courses ↓
             </Link>
-          </div>
+          </motion.div>
+        </motion.div>
 
-          <div className="flex gap-12">
-            <div>
-              <div className="text-3xl font-black">2<span className="text-[#00e5ff]">+</span></div>
-              <div className="text-[#6b7d95] text-sm mt-1">Courses</div>
-            </div>
-            <div>
-              <div className="text-3xl font-black text-[#00e5ff]">Free</div>
-              <div className="text-[#6b7d95] text-sm mt-1">No enrollment fees</div>
-            </div>
-            <div>
-              <div className="text-3xl font-black"><span className="text-[#00e5ff]">∞</span></div>
-              <div className="text-[#6b7d95] text-sm mt-1">Lifetime Access</div>
-            </div>
-          </div>
-        </div>
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span className="text-[#3a4a5c] text-xs font-mono tracking-widest">SCROLL</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="w-px h-8 bg-gradient-to-b from-[#3a4a5c] to-transparent"
+          />
+        </motion.div>
       </section>
 
-      {/* COURSES SECTION */}
-      <section className="bg-[#0e1420] border-y border-[#1e2d42] py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-black tracking-tight mb-2">Courses</h2>
-          <p className="text-[#6b7d95] text-sm mb-10">Free. Beginner friendly. No experience needed.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* SQL Course */}
-            <Link href="/courses/sql" className="group bg-[#080c10] border border-[#1e2d42] rounded-2xl overflow-hidden hover:border-[#00e5ff]/40 transition-all hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.6)] flex flex-col">
-              <div className="h-36 bg-gradient-to-br from-[#001a2e] via-[#002a3e] to-[#00395a] flex items-center justify-center relative">
-                <span className="text-6xl">🗄️</span>
-                <div className="absolute top-3 right-3 text-xs font-mono font-bold px-3 py-1 rounded-full border text-emerald-400 bg-emerald-400/10 border-emerald-400/30">Beginner</div>
-              </div>
-              <div className="p-6 flex flex-col flex-1">
-                <h3 className="text-xl font-black mb-2">SQL from Zero to Hero</h3>
-                <p className="text-[#6b7d95] text-sm leading-relaxed flex-1">Master SQL from scratch — SELECT, JOIN, GROUP BY, indexes, and real-world database design.</p>
-                <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#1e2d42]">
-                  <span className="text-2xl font-black text-[#00e5ff]">Free</span>
-                  <span className="bg-[#00e5ff] text-black font-bold px-5 py-2 rounded-lg text-sm group-hover:bg-[#00c4db] transition-colors">Start Learning →</span>
-                </div>
-              </div>
-            </Link>
+      {/* MARQUEE */}
+      <div className="border-y border-[#1e2d42] py-4 overflow-hidden bg-[#0e1420]">
+        <motion.div
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          className="flex gap-12 whitespace-nowrap"
+        >
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="flex gap-12 items-center">
+              {["SQL", "Azure", "Free Forever", "Beginner Friendly", "AZ-104 Prep", "Career Focused", "Interactive Exercises", "Leaderboard"].map((t) => (
+                <span key={t} className="text-[#3a4a5c] text-sm font-mono tracking-widest uppercase flex items-center gap-12">
+                  {t} <span className="text-[#00e5ff] ml-12">✦</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </motion.div>
+      </div>
 
-            {/* Azure Course */}
-            <Link href="/courses/azure" className="group bg-[#080c10] border border-[#1e2d42] rounded-2xl overflow-hidden hover:border-[#00e5ff]/40 transition-all hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.6)] flex flex-col">
-              <div className="h-36 bg-gradient-to-br from-[#001020] via-[#001535] to-[#001f4a] flex items-center justify-center relative">
-                <span className="text-6xl">☁️</span>
-                <div className="absolute top-3 right-3 text-xs font-mono font-bold px-3 py-1 rounded-full border text-emerald-400 bg-emerald-400/10 border-emerald-400/30">Beginner</div>
-              </div>
-              <div className="p-6 flex flex-col flex-1">
-                <h3 className="text-xl font-black mb-2">Azure Admin Zero to Hero</h3>
-                <p className="text-[#6b7d95] text-sm leading-relaxed flex-1">Go from zero cloud experience to managing Azure infrastructure. Full AZ-104 exam prep included.</p>
-                <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#1e2d42]">
-                  <span className="text-2xl font-black text-[#00e5ff]">Free</span>
-                  <span className="bg-[#00e5ff] text-black font-bold px-5 py-2 rounded-lg text-sm group-hover:bg-[#00c4db] transition-colors">Start Learning →</span>
+      {/* COURSES */}
+      <section className="py-24 px-6 md:px-16 max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-14"
+        >
+          <p className="text-[#6b7d95] text-xs font-mono tracking-widest uppercase mb-3">// Courses</p>
+          <h2 className="text-5xl md:text-7xl font-black tracking-tight">Two courses.<br /><span className="text-[#00e5ff]">Two careers.</span></h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            { href: "/courses/sql", emoji: "🗄️", tag: "SQL", title: "SQL from Zero to Hero", desc: "Master databases from scratch. SELECT, JOIN, indexes, and real-world design.", gradient: "from-[#001a2e] via-[#002a3e] to-[#00395a]" },
+            { href: "/courses/azure", emoji: "☁️", tag: "Azure", title: "Azure Admin Zero to Hero", desc: "Go from zero to cloud pro. Full AZ-104 certification prep included.", gradient: "from-[#001020] via-[#001535] to-[#001f4a]" },
+          ].map((course, i) => (
+            <motion.div
+              key={course.tag}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Link href={course.href} className="group block bg-[#0e1420] border border-[#1e2d42] rounded-2xl overflow-hidden hover:border-[#00e5ff]/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(0,229,255,0.08)]">
+                <div className={`h-48 bg-gradient-to-br ${course.gradient} flex items-center justify-center relative overflow-hidden`}>
+                  <motion.span whileHover={{ scale: 1.2, rotate: -5 }} transition={{ type: "spring", stiffness: 300 }} className="text-7xl">
+                    {course.emoji}
+                  </motion.span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e1420]/60 to-transparent" />
+                  <div className="absolute bottom-4 left-6 text-xs font-mono text-[#00e5ff] tracking-widest">// {course.tag}</div>
                 </div>
-              </div>
-            </Link>
-          </div>
+                <div className="p-8">
+                  <h3 className="text-2xl font-black mb-3 group-hover:text-[#00e5ff] transition-colors duration-300">{course.title}</h3>
+                  <p className="text-[#6b7d95] text-sm leading-relaxed mb-6">{course.desc}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-3xl font-black text-[#00e5ff]">Free</span>
+                    <span className="flex items-center gap-2 text-sm font-bold text-[#6b7d95] group-hover:text-white group-hover:gap-4 transition-all duration-300">
+                      Start Learning <span>→</span>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#080c10] border-t border-[#1e2d42] py-10 px-6">
+      <footer className="border-t border-[#1e2d42] py-10 px-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4">
           <div className="text-[#6b7d95] text-sm font-mono">© 2025 365Academy</div>
           <div className="flex gap-6 text-sm text-[#6b7d95]">
             <a href="#" className="hover:text-white transition-colors">Privacy</a>
             <a href="#" className="hover:text-white transition-colors">Terms</a>
-            <a href="#" className="hover:text-white transition-colors">Contact</a>
+            <Link href="/donate" className="hover:text-white transition-colors">Donate</Link>
           </div>
         </div>
       </footer>
