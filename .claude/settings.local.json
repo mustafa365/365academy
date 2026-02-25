@@ -8,7 +8,8 @@
       "Bash(node:*)",
       "Bash(cd \"C:\\\\Users\\\\Mustafa\\\\OneDrive\\\\Desktop\\\\learnwithahmed\" && node_modules/.bin/prisma --version 2>&1)",
       "Bash(cat:*)",
-      "Bash(cd \"/c/Users/Mustafa/OneDrive/Desktop/learnwithahmed\" && git add . && git commit -m \"Initial commit - 365Academy website\" 2>&1)"
+      "Bash(cd \"/c/Users/Mustafa/OneDrive/Desktop/learnwithahmed\" && git add . && git commit -m \"Initial commit - 365Academy website\" 2>&1)",
+      "Bash(cd \"/c/Users/Mustafa/OneDrive/Desktop/learnwithahmed\" && git branch -M main && git push -u origin main 2>&1)"
     ]
   }
 }
