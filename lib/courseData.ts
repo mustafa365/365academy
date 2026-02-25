@@ -2606,6 +2606,159 @@ EXECUTE FUNCTION update_timestamp();
     totalXP: 4500,
     sections: [
       // ─────────────────────────────────────────
+      // SECTION 0: Azure Careers in IT
+      // ─────────────────────────────────────────
+      {
+        id: "az-s0",
+        title: "Azure Careers in IT",
+        description: "Why cloud skills matter, who uses Azure, and what your career can look like",
+        lessons: [
+          {
+            id: "az-l0",
+            title: "Why Azure is the #1 Cloud Skill in IT",
+            description: "The cloud has changed IT forever — here's why Azure leads the market",
+            duration: "10 min",
+            xp: 50,
+            readingTime: "10 min",
+            realWorld: `## Sarah Gets the Azure Job
+
+Sarah had been working in on-premises IT support for 3 years. Her company was migrating everything to Azure. Her manager gave her a choice: learn Azure in 3 months or face redundancy.
+
+She passed the AZ-104 exam 10 weeks later.
+
+Her new job title: **Cloud Infrastructure Engineer**. Salary went from £38,000 to £65,000.
+
+> "The exam felt intimidating at first. But once I understood how Azure is organized — subscriptions, resource groups, services — everything clicked. The hardest part was just getting started."
+
+Her day now involves:
+- Deploying VMs and web apps for internal teams
+- Managing Azure AD for 800 employees
+- Monitoring costs and setting budget alerts
+- Setting up VPNs and private networks
+- Running CI/CD pipelines for the dev team
+
+**This course will take you from zero to everything Sarah does every day.**`,
+            content: `# Why Azure is the #1 Cloud Skill in IT
+
+Cloud computing has completely transformed IT. Companies don't buy physical servers anymore — they rent computing power, storage, and services from cloud providers and pay only for what they use.
+
+Microsoft Azure is the #2 cloud provider in the world (behind AWS) and the #1 choice in enterprise environments — banks, governments, hospitals, and Fortune 500 companies all run on Azure.
+
+**If you work in IT, Azure knowledge is no longer optional.**
+
+## The Azure Job Market
+
+Azure skills are among the most in-demand in the entire technology industry. Here's why:
+
+- **Microsoft is everywhere** — 90% of Fortune 500 companies already use Microsoft products. Azure is the natural cloud choice.
+- **Enterprise-first** — companies with existing Microsoft licenses (Office 365, Windows Server, SQL Server) get huge discounts moving to Azure
+- **Government cloud** — Azure has dedicated government cloud regions, making it dominant in public sector IT
+- **Hybrid cloud** — Azure Arc lets companies manage on-premises servers alongside cloud resources, which is unique to Azure
+
+## Azure Career Paths
+
+### 1. Cloud/Azure Administrator
+Manages Azure infrastructure — VMs, networking, storage, identity. This is the AZ-104 role.
+
+**Average salary:** £55,000–£90,000 / $80,000–$130,000
+
+### 2. Cloud Architect
+Designs cloud solutions for enterprises. Requires AZ-104 + AZ-305.
+
+**Average salary:** £80,000–£130,000 / $120,000–$180,000
+
+### 3. Cloud Security Engineer
+Secures cloud workloads. Uses Azure Defender, Sentinel, and Policy.
+
+**Average salary:** £75,000–£120,000 / $110,000–$160,000
+
+### 4. DevOps Engineer
+Automates deployments using Azure DevOps, Pipelines, and AKS.
+
+**Average salary:** £70,000–£115,000 / $100,000–$155,000
+
+### 5. Cloud Data Engineer
+Builds data pipelines in Azure Data Factory, Synapse, and Databricks.
+
+**Average salary:** £70,000–£110,000 / $100,000–$150,000
+
+## The AZ-104 Certification
+
+This course prepares you for the **AZ-104: Microsoft Azure Administrator** exam — the most valuable entry-level Azure certification.
+
+What it proves:
+- You can deploy and manage Azure resources
+- You understand Azure identity and governance
+- You can configure storage and networking
+- You can monitor and back up Azure workloads
+
+**Passing AZ-104 typically increases salary by 15–30%.**
+
+## What This Course Covers
+
+| Section | Topics |
+|---------|--------|
+| Section 1 | Cloud fundamentals, Azure Portal, subscriptions, cost management |
+| Section 2 | Virtual Machines, Virtual Networks, Load Balancing |
+| Section 3 | Azure AD (Entra ID), RBAC, Monitor, Backup |
+| Section 4 | Storage, App Service, Key Vault, Azure DevOps |
+
+By the end, you'll be able to manage Azure infrastructure from scratch and be ready for the AZ-104 exam.
+
+## A Note on Pricing
+
+Azure has a **free account** that gives you:
+- 12 months of popular free services
+- $200 credit for 30 days
+- 55+ always-free services
+
+Sign up at azure.microsoft.com/free to follow along hands-on. Everything in this course works within the free tier.
+
+**Let's start building.**`,
+          },
+        ],
+        quiz: {
+          id: "az-q0",
+          questions: [
+            {
+              id: "azq0-q1",
+              type: "MCQ",
+              question: "Which Azure certification is designed for administrators managing Azure infrastructure?",
+              options: ["AZ-900", "AZ-104", "AZ-305", "AZ-400"],
+              correctAnswer: "AZ-104",
+              explanation: "AZ-104 (Microsoft Azure Administrator) is the core admin certification covering VMs, networking, storage, identity, and governance.",
+            },
+            {
+              id: "azq0-q2",
+              type: "MCQ",
+              question: "Why is Azure particularly dominant in enterprise environments?",
+              options: [
+                "It is the cheapest cloud provider",
+                "It has the most data centers globally",
+                "Most enterprises already use Microsoft products like Office 365 and Windows",
+                "It only works on Windows machines",
+              ],
+              correctAnswer: "Most enterprises already use Microsoft products like Office 365 and Windows",
+              explanation: "Azure integrates deeply with Microsoft's existing ecosystem, making it the natural choice for organisations already using Microsoft products.",
+            },
+            {
+              id: "azq0-q3",
+              type: "MCQ",
+              question: "What does the Azure free account provide?",
+              options: [
+                "Unlimited free usage forever",
+                "12 months of popular free services plus $200 credit for 30 days",
+                "Only $200 credit with no free services",
+                "Free access only if you pass AZ-900",
+              ],
+              correctAnswer: "12 months of popular free services plus $200 credit for 30 days",
+              explanation: "The Azure free account includes 12 months of popular services, $200 in credits for the first 30 days, and 55+ always-free services.",
+            },
+          ],
+        },
+      },
+
+      // ─────────────────────────────────────────
       // SECTION 1: Azure Fundamentals
       // ─────────────────────────────────────────
       {
@@ -2619,6 +2772,35 @@ EXECUTE FUNCTION update_timestamp();
             description: "IaaS, PaaS, SaaS, and cloud deployment models explained",
             duration: "15 min",
             xp: 50,
+            readingTime: "15 min",
+            realWorld: `## Sarah's Company Asks: "Should We Move to the Cloud?"
+
+Sarah's manager calls a meeting. The on-premises data centre lease is up for renewal — £120,000 per year just for the physical space, plus hardware maintenance, cooling, and a dedicated ops team.
+
+Someone suggests: **what if we move to Azure?**
+
+Sarah is asked to prepare a comparison. She looks at three options:
+
+**Option A — Stay on-premises (IaaS equivalent)**
+- Buy new servers: £80,000 upfront
+- Maintain them: £20,000/year
+- Full control, but all risk is on us
+
+**Option B — Azure IaaS (VMs)**
+- Rent virtual machines: ~£3,000/month
+- No hardware to manage, we still control the OS
+- Scale up during busy periods, scale down when quiet
+
+**Option C — Azure PaaS (App Service + Azure SQL)**
+- Just deploy the code, Microsoft manages the platform
+- ~£1,200/month
+- No OS patching, auto-scaling built in
+
+Her recommendation: **Option C for the web app, Option B for the legacy system that can't be refactored yet**.
+
+The company saves £75,000 in year one. Sarah gets a promotion.
+
+**Understanding IaaS vs PaaS vs SaaS isn't just theory — it determines how much you pay and how much you manage.**`,
             content: `# Cloud Computing Fundamentals
 
 Cloud computing delivers computing services — servers, storage, databases, networking, software — over the internet ("the cloud").
@@ -2669,6 +2851,24 @@ Fully managed software you just use.
             description: "Navigate Azure and understand the core service categories",
             duration: "20 min",
             xp: 75,
+            readingTime: "20 min",
+            realWorld: `## Sarah's First Week on the Azure Portal
+
+Day 1. Sarah logs into portal.azure.com for the first time. She's met with a dashboard full of tiles, graphs, and a left sidebar with dozens of services.
+
+Her task: find out how many virtual machines the company currently has running.
+
+She clicks "Virtual machines" in the sidebar. Sees 12 VMs. Notes 3 of them have names like "vm-test-old" and "vm-dev-temp" — clearly forgotten. She flags them to be shut down. That saves £180/month instantly.
+
+By end of week 1 she has:
+- Pinned her most-used resources to the dashboard (VMs, Resource Groups, Cost Management)
+- Installed the Azure mobile app to get cost alerts on her phone
+- Discovered the **Cloud Shell** (bash/PowerShell in the browser) — she uses this for quick CLI tasks without installing anything locally
+- Set up a **Resource Group** for each project: \`rg-finance\`, \`rg-hr-portal\`, \`rg-devops\`
+
+One thing she learned the hard way: **always use Resource Groups to organise everything**. Resources without a group become impossible to track and delete later.
+
+**The Azure Portal is your control centre. Learn to navigate it fast and you'll save your company money within the first week.**`,
             content: `# The Azure Portal
 
 The Azure portal (portal.azure.com) is a web-based unified console for managing all Azure resources.
@@ -2734,6 +2934,38 @@ New-AzResourceGroup -Name myRG -Location "East US"
             description: "Organize and govern Azure resources at scale",
             duration: "18 min",
             xp: 75,
+            readingTime: "18 min",
+            realWorld: `## Sarah Reorganises a Billing Nightmare
+
+Six months into her role, Sarah inherits a mess. The company has one Azure subscription. Finance, HR, DevOps, and Marketing all use the same subscription. Nobody knows who owns what. The monthly bill arrives as one number and nobody can explain it.
+
+The CFO emails: "We need to know how much each department is spending on cloud."
+
+Sarah's solution: **separate subscriptions per department, under one Management Group**.
+
+She creates:
+
+\`\`\`
+Contoso Bank Management Group
+├── Production Subscription (prod workloads)
+│   ├── rg-finance-prod
+│   ├── rg-hr-prod
+│   └── rg-devops-prod
+├── Development Subscription (dev/test — cheaper)
+│   ├── rg-finance-dev
+│   └── rg-hr-dev
+└── Shared Services Subscription (networking, monitoring)
+    └── rg-shared-infra
+\`\`\`
+
+Now:
+- Each subscription has its own billing
+- Policies applied at the Management Group level flow down to all subscriptions (e.g., "all resources must be in UK South region")
+- Dev subscription has spending limits to prevent accidents
+
+The CFO now has a clear monthly breakdown. Finance is spending 42% of the cloud budget. That triggers a separate review.
+
+**Management Groups and Subscriptions are how real organisations stay organised and in control of cloud spending.**`,
             content: `# Azure Subscriptions & Management Groups
 
 ## Azure Management Hierarchy
@@ -2805,6 +3037,28 @@ Example: "All VMs must use approved VM sizes"`,
             description: "Understand and control your Azure spending",
             duration: "15 min",
             xp: 75,
+            readingTime: "15 min",
+            realWorld: `## Sarah Gets the £47,000 Bill Shock
+
+It's the 5th of the month. Sarah opens her email and sees the Azure invoice: **£47,382**.
+
+Last month it was £12,400. She has 20 minutes before her manager calls.
+
+She opens **Azure Cost Management + Billing** and filters by "Last month vs previous month". The culprit: a single Virtual Machine — \`vm-ml-training-01\` — an A100 GPU instance that a data scientist spun up for a machine learning experiment and forgot to stop. It ran 24/7 for 30 days at £48/hour.
+
+£48 × 24 × 30 = **£34,560** from one forgotten VM.
+
+Sarah immediately:
+1. **Shuts down the VM** — stops the bleeding
+2. **Sets up a budget alert**: email her when spend exceeds £15,000/month
+3. **Creates an Azure Policy**: VMs larger than Standard_D4s_v3 require manager approval tag
+4. **Enables auto-shutdown** on all dev/test VMs at 7pm daily
+
+She also identifies they can save £3,200/month by switching production VMs from Pay-As-You-Go to **Reserved Instances** (1-year commitment, 40% cheaper).
+
+Her manager is annoyed but impressed. The bill next month: £11,800.
+
+**Cost management is one of the most valuable Azure skills. Cloud bills can spiral fast — knowing how to monitor, alert, and cut costs makes you indispensable.**`,
             content: `# Azure Cost Management
 
 Understanding costs is essential for any Azure administrator.
@@ -2946,6 +3200,31 @@ Tags let you filter Cost Analysis by team, project, or environment.`,
             description: "Create and manage VMs — Azure's core compute service",
             duration: "30 min",
             xp: 125,
+            readingTime: "30 min",
+            realWorld: `## Sarah Deploys the Company's First Production VM
+
+The HR team needs a new application server. It runs a legacy Windows app that can't be containerised. Sarah needs to provision a VM that will run 24/7, handle 50 concurrent users, and be accessible only from the office network.
+
+Her checklist before clicking "Create":
+
+**Region:** UK South (company data must stay in UK for compliance)
+**Image:** Windows Server 2022 Datacenter
+**Size:** Standard_D4s_v3 (4 vCPUs, 16GB RAM — right-sized based on the app's requirements)
+**Authentication:** Password (stored in Azure Key Vault, not in her head)
+**Disk:** Premium SSD for the OS, Standard HDD for data
+**Networking:** Place in \`vnet-hr-prod\`, subnet \`snet-app\`, NO public IP
+
+She deliberately does NOT give it a public IP — the VM is only accessible through the company VPN. This is a security requirement for anything touching HR data.
+
+After deployment, she:
+- Enables **Azure Backup** (daily backups, 30-day retention)
+- Sets up **auto-shutdown at midnight** (the app isn't used outside business hours — saves 33% on compute cost)
+- Tags it: \`Environment: Production\`, \`Owner: hr-team\`, \`CostCentre: HR-2024\`
+- Installs the **Azure Monitor agent** so she gets alerts if CPU or disk goes above 80%
+
+The HR team is live in 2 hours. On-premises, this would have taken 3 weeks.
+
+**Virtual Machines are the building block of cloud infrastructure. Knowing how to size, secure, and monitor them properly separates a junior admin from a senior one.**`,
             content: `# Azure Virtual Machines
 
 Virtual Machines (VMs) are the core IaaS compute offering in Azure. They give you full control over the OS and software stack.
@@ -3027,6 +3306,39 @@ az vm show --resource-group myRG --name myVM --query powerState
             description: "Private networking in Azure — VNets, subnets, and NSGs",
             duration: "25 min",
             xp: 125,
+            readingTime: "25 min",
+            realWorld: `## Sarah Designs a Network That Passes a Security Audit
+
+Contoso Bank has a penetration test scheduled. The security consultant's report from last year flagged: "Database server is reachable from the internet on port 1433. Critical risk."
+
+Sarah redesigns the network architecture before the audit:
+
+**Before (insecure):**
+\`\`\`
+Internet → VM (web) → Azure SQL (public endpoint) ← anyone can try to connect
+\`\`\`
+
+**After (Sarah's design):**
+\`\`\`
+VNet: 10.0.0.0/16
+├── snet-web (10.0.1.0/24)     — Web servers, public-facing
+│     NSG: Allow port 443 inbound from Internet
+│     NSG: Allow port 80 (redirect to 443)
+│     NSG: Deny everything else inbound
+├── snet-app (10.0.2.0/24)     — App servers
+│     NSG: Allow port 8080 from snet-web only
+│     NSG: Deny all internet inbound
+└── snet-data (10.0.3.0/24)   — Database servers
+      NSG: Allow port 1433 from snet-app only
+      NSG: Deny everything else
+      Azure SQL: Private Endpoint only (no public access)
+\`\`\`
+
+The database is now completely isolated. The only path to it: web → app → database. No direct internet access possible.
+
+The pen test report comes back: **0 critical findings** related to network exposure.
+
+**Network Security Groups are your firewall rules in Azure. A well-designed VNet with proper NSG rules is the difference between passing and failing a security audit.**`,
             content: `# Azure Virtual Networks (VNets)
 
 VNets are the foundation of private networking in Azure. Every resource in Azure that needs network connectivity lives in a VNet.
@@ -3103,6 +3415,25 @@ Peered VNets communicate over Azure's backbone network — no internet, no encry
             description: "Distribute traffic with Load Balancer, App Gateway, and Front Door",
             duration: "22 min",
             xp: 100,
+            readingTime: "22 min",
+            realWorld: `## Sarah Stops the Website Crashing on Payday
+
+Every month on payday, Contoso Bank's employee portal crashes. 800 employees all log in simultaneously to check their payslips. The single web server can't handle it.
+
+Sarah's fix: **Azure Application Gateway + VM Scale Set**.
+
+She sets up:
+- **VM Scale Set**: starts at 2 VMs, auto-scales to 8 when CPU > 70%
+- **Application Gateway**: routes incoming HTTPS traffic across all VMs
+- **Health probes**: if a VM stops responding, Application Gateway removes it from rotation automatically
+- **Session affinity**: disabled (the app is stateless, so users can hit any VM)
+- **WAF (Web Application Firewall)**: enabled on the App Gateway — blocks SQL injection, XSS, and common attacks
+
+Result: first payday after the change — 800 users log in simultaneously. The Scale Set spins up 6 VMs in 3 minutes. Average response time: 280ms (previously it was timing out). Zero downtime.
+
+Sarah also uses **Azure Front Door** for their public-facing website — it routes users to the nearest Azure region automatically, so UK users hit UK South and US users hit East US.
+
+**Load balancing turns a single point of failure into a resilient, scalable system. This is one of the first things you'll build for any production workload.**`,
             content: `# Azure Load Balancing
 
 Azure offers several load balancing services. Choose based on whether your traffic is internal/external and what OSI layer you need.
@@ -3245,6 +3576,40 @@ DNS-based routing to different Azure regions or external endpoints. Routing meth
             description: "Cloud identity and access management",
             duration: "25 min",
             xp: 125,
+            readingTime: "25 min",
+            realWorld: `## Sarah Onboards 200 New Employees in One Morning
+
+Contoso Bank acquires a smaller firm. 200 employees need Azure AD accounts, email, and access to the right SharePoint sites and apps — by Monday.
+
+Sarah's old approach would be: create each user manually in the portal. 200 × 5 minutes = 16 hours. Not happening.
+
+Her actual approach:
+
+**Step 1**: Get the HR spreadsheet with all names, emails, departments, job titles.
+
+**Step 2**: Use PowerShell to bulk-create users:
+\`\`\`powershell
+Import-Csv "new_users.csv" | ForEach-Object {
+  New-AzureADUser `
+    -DisplayName $_.Name `
+    -UserPrincipalName $_.Email `
+    -Department $_.Department `
+    -PasswordProfile (New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile `
+      -Property @{Password="TempPass2024!"; ForceChangePasswordNextLogin=$true})
+}
+\`\`\`
+
+**Step 3**: Add users to the right Security Groups (which already control app access):
+- \`grp-finance-users\` → gets access to finance apps
+- \`grp-all-staff\` → gets basic SharePoint and email
+
+**Step 4**: Enable **Multi-Factor Authentication** for all new accounts via Conditional Access policy.
+
+Total time: 45 minutes. Sarah's colleague who did this manually last time took 3 days.
+
+She also adds the new employees' on-premises AD to Azure AD via **Azure AD Connect** — so they use the same password for both.
+
+**Azure AD is the identity backbone of every Microsoft cloud environment. Managing it efficiently is one of the highest-value skills an Azure admin can have.**`,
             content: `# Azure Active Directory (Microsoft Entra ID)
 
 Azure AD (now rebranded as Microsoft Entra ID) is Azure's cloud-based identity and access management service.
@@ -3312,6 +3677,36 @@ az keyvault set-policy \\
             description: "Control who can do what in Azure",
             duration: "20 min",
             xp: 125,
+            readingTime: "20 min",
+            realWorld: `## Sarah Locks Down Access After a Scary Incident
+
+On a Friday afternoon, Sarah gets a Slack message from a junior developer:
+
+> "Hey, I accidentally deleted the production resource group. I thought it was dev. Is that bad?"
+
+It is bad. Very bad. The production finance application is gone.
+
+Azure Backup gets it restored in 4 hours. But the incident triggers a full access review.
+
+Sarah audits who has what access across all subscriptions. She finds:
+- 6 developers have **Owner** role on the production subscription (they should have **Contributor** at most)
+- 3 contractors have **Contributor** on resource groups they stopped working on 8 months ago
+- The service account for the deployment pipeline has **Owner** on everything (it only needs **Contributor** on two specific resource groups)
+
+She applies the **principle of least privilege**:
+
+| Person/Service | Old Role | New Role | Scope |
+|---|---|---|---|
+| Developers | Owner (subscription) | Contributor (dev RG only) | Resource Group |
+| Contractors | Contributor | Removed | — |
+| Deploy pipeline | Owner (subscription) | Contributor | 2 specific RGs |
+| Sarah | Owner | Owner | Subscription (she needs it) |
+
+She also enables **Privileged Identity Management (PIM)** — now anyone who needs temporary elevated access must request it, and it expires automatically after 8 hours.
+
+The junior developer who caused the incident? They can now only read production. Delete is off the table.
+
+**RBAC is your "who can do what" system. After any security incident, access review is always the first step.**`,
             content: `# Azure Role-Based Access Control (RBAC)
 
 RBAC controls access to Azure resources by assigning roles to users, groups, or service principals at a specific scope.
@@ -3378,6 +3773,33 @@ az role definition create --role-definition @my-custom-role.json
             description: "Monitor, alert, and protect your Azure resources",
             duration: "22 min",
             xp: 125,
+            readingTime: "22 min",
+            realWorld: `## Sarah Gets Paged at 2am — and Fixes It Before Anyone Notices
+
+It's 2:07am on a Tuesday. Sarah's phone buzzes. **Azure Monitor alert: "vm-finance-app01 — CPU 98% for 15 minutes."**
+
+She opens the Azure mobile app. The VM is maxing out. She checks the metrics: CPU started spiking at 1:55am. She looks at the connected Log Analytics workspace and searches for what happened at that time.
+
+She finds it: a scheduled batch job that processes end-of-month statements ran at 2am. It always did. But this month's data volume was 3x larger due to the acquisition.
+
+She has two options:
+1. Wait for the batch to finish (it'll take another 2 hours, VM barely functioning)
+2. Resize the VM on the spot
+
+She resizes from Standard_D4s_v3 (4 vCPU) to Standard_D8s_v3 (8 vCPU) — Azure makes this a 3-minute operation. CPU drops from 98% to 41%.
+
+Batch finishes at 3:15am. She resizes back to D4s_v3 at 3:20am.
+
+Total cost of the larger VM for 1.5 hours: £1.80.
+
+In the morning she also:
+- Sets the batch job VM to auto-resize on a schedule for end-of-month
+- Checks Azure Backup — confirming the finance VM has a 7am backup from yesterday ready if needed
+- Creates a new alert: "if batch job takes >3 hours, page Sarah AND the on-call developer"
+
+Nobody knew anything happened. That's what good monitoring looks like.
+
+**Azure Monitor is your eyes and ears. Without it, you're flying blind. With it, you can fix problems before users notice them.**`,
             content: `# Azure Monitor
 
 Azure Monitor is the central observability service that collects, analyzes, and acts on telemetry from Azure resources.
@@ -3541,6 +3963,39 @@ Disaster recovery — continuously replicates workloads from primary to secondar
             description: "Blob, Files, Queues, and Table storage explained",
             duration: "25 min",
             xp: 125,
+            readingTime: "25 min",
+            realWorld: `## Sarah Migrates 2TB of Files to Azure and Cuts Costs by 60%
+
+Contoso Bank has a file server. It's a physical NAS device costing £800/month in hosting, with 2TB of data. Half of it hasn't been touched in 3 years — old scanned documents, archived statements, compliance records.
+
+Sarah's migration plan:
+
+**Active files (accessed weekly)** → Azure Files (SMB share, mapped as a network drive)
+- Staff open files in Windows Explorer exactly as before, no retraining needed
+- 500GB, Hot tier: ~£8/month
+
+**Recent documents (accessed monthly)** → Azure Blob Storage, Cool tier
+- Accessed via internal portal
+- 1TB, Cool tier: ~£12/month
+
+**Archive records (3+ years old, rarely accessed)** → Azure Blob Storage, Archive tier
+- Compliance requirement: must keep for 7 years
+- 500GB, Archive tier: ~£0.50/month (rehydrate takes hours, that's fine for compliance docs)
+
+She sets up a **Lifecycle Management policy**:
+\`\`\`
+If blob hasn't been accessed in 30 days → move to Cool
+If blob hasn't been accessed in 180 days → move to Archive
+If blob is older than 7 years → delete
+\`\`\`
+
+This runs automatically. She never has to think about it again.
+
+Total monthly cost after migration: **£320/month** (was £800/month).
+
+She also enables **Soft Delete** (30-day recycle bin) and **versioning** — if anyone overwrites or deletes a file accidentally, she can recover it.
+
+**Understanding Azure Storage tiers is one of the fastest ways to cut cloud costs. Most companies overpay by putting everything in Hot storage.**`,
             content: `# Azure Storage
 
 Azure Storage is Microsoft's cloud storage solution. A single storage account can contain multiple types of storage.
@@ -3624,6 +4079,33 @@ az storage blob generate-sas \\
             description: "Deploy web apps and APIs without managing servers",
             duration: "25 min",
             xp: 125,
+            readingTime: "25 min",
+            realWorld: `## Sarah Deploys the Customer Portal in 20 Minutes
+
+The development team finishes the new customer-facing portal. It's a .NET 8 web app. They hand it to Sarah to deploy to production.
+
+Old approach: provision a Windows VM, install IIS, install .NET runtime, configure SSL, set up monitoring, configure auto-scaling. Takes a day.
+
+**Sarah's approach with App Service:**
+
+1. Creates an App Service Plan: **P2v3** (2 vCPU, 8GB RAM), UK South
+2. Creates the Web App, selects .NET 8 runtime
+3. Developer runs: \`git push azure main\` — that's the entire deployment
+4. Enables **custom domain** (customerportal.contosob.com) and a free managed SSL certificate
+5. Sets up **deployment slots**: Production slot + Staging slot
+6. Configures **auto-scale**: 1 to 5 instances based on CPU
+
+Total time: **22 minutes**.
+
+The staging slot is her favourite feature. When developers want to push an update:
+1. They deploy to Staging first
+2. Sarah runs smoke tests against the staging URL
+3. She clicks **Swap** — Staging becomes Production with zero downtime (Azure swaps them instantly)
+4. If something's wrong, she swaps back in 30 seconds
+
+She also configures the App Service to pull its database connection string from **Azure Key Vault** — no secrets in the app settings or code.
+
+**App Service removes all the server management overhead. You focus on the app, Azure manages the platform.**`,
             content: `# Azure App Service
 
 App Service is a PaaS offering for hosting web applications, REST APIs, and mobile backends. You manage your app; Azure manages the platform.
@@ -3715,6 +4197,43 @@ az monitor autoscale create \\
             description: "Store and manage secrets, keys, and certificates securely",
             duration: "20 min",
             xp: 100,
+            readingTime: "20 min",
+            realWorld: `## Sarah Finds Passwords in Source Code — and Fixes It
+
+During a routine code review, Sarah spots something alarming in the company's GitHub repository:
+
+\`\`\`csharp
+// config.cs — committed to git 8 months ago
+var connectionString = "Server=prod-sql.contoso.com;Database=FinanceDB;User=sa;Password=C0nt0s0Pr0d2023!";
+var apiKey = "sk-live-8f3a9b2c1d4e5f6a7b8c9d0e";
+\`\`\`
+
+A real password and a real API key — in a public-facing GitHub repo. For 8 months.
+
+Sarah's immediate actions:
+1. **Rotate the database password** — assume it's compromised
+2. **Revoke and regenerate the API key** — same assumption
+3. Check Azure AD sign-in logs for any suspicious access
+
+Then she fixes the root cause using **Azure Key Vault**:
+
+\`\`\`
+kv-contoso-prod (Key Vault)
+├── Secrets
+│   ├── SqlConnectionString → "Server=...;Password=<new-rotated-password>"
+│   ├── PaymentApiKey → "sk-live-<new-key>"
+│   └── SendgridApiKey → "SG.<key>"
+├── Keys
+│   └── DataEncryptionKey → RSA 2048 (used to encrypt sensitive data at rest)
+└── Certificates
+    └── contoso-tls → auto-renews via DigiCert integration
+\`\`\`
+
+The app now retrieves secrets at runtime from Key Vault using **Managed Identity** — no passwords anywhere in code or config files. Managed Identity means the app authenticates to Key Vault as itself, no credentials required.
+
+She adds a **Git pre-commit hook** that scans for secrets before any commit is pushed. It rejects commits containing patterns that look like passwords or API keys.
+
+**Key Vault should be the first thing you set up in any Azure project. Secrets in code is the most common and most dangerous mistake in cloud deployments.**`,
             content: `# Azure Key Vault
 
 Key Vault is Azure's centralized secrets management service. Never hardcode passwords or connection strings in your code.
@@ -3794,6 +4313,85 @@ az keyvault update --name myVault --enable-purge-protection true
             description: "Automate builds, tests, and deployments with Azure Pipelines",
             duration: "30 min",
             xp: 150,
+            readingTime: "30 min",
+            realWorld: `## Sarah Ends "It Works on My Machine" Forever
+
+Every deployment is a nightmare. The developer builds locally, creates a zip, sends it to Sarah over Teams, and she manually uploads it to the server. This happens 3–4 times a week.
+
+Last month, a developer accidentally sent Sarah the wrong version. Wrong zip. She deployed it. Production was broken for 40 minutes. The post-mortem said: "human error in the deployment process."
+
+Sarah sets up a proper CI/CD pipeline using **Azure DevOps**:
+
+**The pipeline (azure-pipelines.yml):**
+\`\`\`yaml
+trigger:
+  branches:
+    include:
+      - main
+
+stages:
+- stage: Build
+  jobs:
+  - job: BuildAndTest
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'  # Pipeline FAILS if any test fails
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+
+- stage: Deploy_Staging
+  dependsOn: Build
+  jobs:
+  - deployment: DeployToStaging
+    environment: 'staging'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'Contoso-Production'
+              appName: 'contoso-customer-portal'
+              slotName: 'staging'
+
+- stage: Deploy_Production
+  dependsOn: Deploy_Staging
+  condition: succeeded()
+  jobs:
+  - deployment: SwapToProduction
+    environment: 'production'  # Requires approval from Sarah
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureAppServiceManage@0
+            inputs:
+              Action: 'Swap Slots'
+              WebAppName: 'contoso-customer-portal'
+              SourceSlot: 'staging'
+\`\`\`
+
+**Now the process is:**
+1. Developer merges to \`main\`
+2. Pipeline builds automatically, runs all tests
+3. If tests pass, deploys to Staging
+4. Sarah gets a Teams notification: "Staging ready for review. Approve to deploy production?"
+5. She approves. Pipeline swaps Staging → Production. Zero downtime.
+
+No more zip files. No more "I deployed the wrong version." No more manual steps.
+
+**CI/CD pipelines are the most impactful automation you can build as an Azure admin. Once set up, deployments are safer, faster, and fully auditable.**`,
             content: `# Azure DevOps
 
 Azure DevOps is a suite of development tools for the full software development lifecycle.

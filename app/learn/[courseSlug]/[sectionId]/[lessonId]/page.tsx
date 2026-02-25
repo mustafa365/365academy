@@ -462,10 +462,12 @@ export default function LessonPage({
               {/* Header */}
               <div className="bg-gradient-to-r from-[#001a2e] to-[#002a3e] border-b border-[#1e2d42] px-6 py-4 flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30 flex items-center justify-center text-sm">
-                  👨‍💻
+                  {course.slug === "azure" ? "👩‍💼" : "👨‍💻"}
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-white">Alex — Data Engineer at Meta</div>
+                  <div className="text-sm font-bold text-white">
+                    {course.slug === "azure" ? "Sarah — Azure Admin at Contoso Bank" : "Alex — Data Engineer at Meta"}
+                  </div>
                   <div className="text-xs text-[#6b7d95] font-mono">Real world scenario</div>
                 </div>
                 <div className="ml-auto">
@@ -480,7 +482,7 @@ export default function LessonPage({
               </div>
             </div>
             <p className="text-xs text-[#3a4a5c] font-mono mt-3 text-center">
-              Alex is a fictional character used to illustrate real-world SQL concepts
+              {course.slug === "azure" ? "Sarah is a fictional character used to illustrate real-world Azure concepts" : "Alex is a fictional character used to illustrate real-world SQL concepts"}
             </p>
           </div>
         )}
