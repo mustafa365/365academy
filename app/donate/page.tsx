@@ -1,75 +1,97 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 
+const PRESET_AMOUNTS = [5, 10, 25, 50];
+
 export default function DonatePage() {
+  const [selected, setSelected] = useState<number | null>(10);
+  const [custom, setCustom] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const amount = custom ? parseInt(custom) : selected;
+
+  async function handleDonate() {
+    if (!amount || amount < 1) return;
+    setLoading(true);
+    const res = await fetch("/api/donate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount }),
+    });
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+    else setLoading(false);
+  }
+
   return (
-    <main className="min-h-screen bg-[#080c10] text-[#e2eaf4]">
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#1e2d42] bg-[#080c10]/80 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
+    <main className="min-h-screen bg-[#080c10] text-[#e2eaf4] flex items-center justify-center px-6">
+      <div className="fixed inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: `linear-gradient(rgba(0,229,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.05) 1px, transparent 1px)`, backgroundSize: "60px 60px" }} />
+
+      <div className="relative w-full max-w-md">
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-3 mb-6">
             <div className="w-2 h-2 rounded-full bg-[#00e5ff] shadow-[0_0_12px_#00e5ff] animate-pulse" />
             <span className="font-bold text-lg tracking-tight">365Academy</span>
           </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/courses" className="text-[#6b7d95] hover:text-white text-sm transition-colors">
-              Courses
-            </Link>
-            <Link href="/login" className="text-sm bg-[#00e5ff] text-black font-semibold px-4 py-2 rounded-lg hover:bg-[#00c4db] transition-all hover:-translate-y-0.5">
-              Sign In
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      <div className="pt-28 pb-20 px-6">
-        <div className="max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-[#00e5ff]/8 border border-[#00e5ff]/20 text-[#00e5ff] px-4 py-1.5 rounded-full text-xs font-mono mb-6">
-            ❤️ &nbsp;Keep 365Academy free for everyone
-          </div>
-
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-4">
-            Support free SQL & Azure education.
-          </h1>
-
-          <p className="text-[#6b7d95] text-sm md:text-base leading-relaxed mb-6">
-            365Academy is intentionally free of enrollment fees so that anyone, anywhere can learn SQL and Azure without worrying about cost.
-            Your donation helps cover hosting, development time, and new content so we can keep this platform free for learners like you.
+          <div className="text-4xl mb-3">❤️</div>
+          <h1 className="text-3xl font-black tracking-tight mb-2">Support 365Academy</h1>
+          <p className="text-[#6b7d95] text-sm leading-relaxed">
+            365Academy is completely free. Your donation helps keep it running and growing for everyone.
           </p>
-
-          <p className="text-[#6b7d95] text-sm md:text-base leading-relaxed mb-10">
-            If 365Academy has helped you on your journey, please consider making a contribution. Even a small amount makes a real difference.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-14">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-[#f97373] text-black font-bold text-sm md:text-base shadow-[0_0_30px_rgba(248,113,113,0.35)] hover:bg-[#fb7171] transition-transform hover:-translate-y-0.5"
-            >
-              <span className="text-lg">❤️</span>
-              <span>Donate to 365Academy</span>
-            </button>
-            <span className="text-[11px] text-[#6b7d95] font-mono">
-              (Wire this button to your preferred donation platform.)
-            </span>
-          </div>
-
-          <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-            <div>
-              <div className="text-[#00e5ff] text-xs font-mono mb-1">// Access</div>
-              <p className="text-[#b8c5d6]">Help keep all lessons, quizzes, and practice tools available for free.</p>
-            </div>
-            <div>
-              <div className="text-[#00e5ff] text-xs font-mono mb-1">// Content</div>
-              <p className="text-[#b8c5d6]">Support new modules, exercises, and real-world projects for learners.</p>
-            </div>
-            <div>
-              <div className="text-[#00e5ff] text-xs font-mono mb-1">// Community</div>
-              <p className="text-[#b8c5d6]">Enable more people with no prior experience to start a tech career.</p>
-            </div>
-          </div>
         </div>
+
+        <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-8">
+          <p className="text-xs font-mono text-[#6b7d95] uppercase tracking-widest mb-4">Choose an amount</p>
+
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            {PRESET_AMOUNTS.map((a) => (
+              <button
+                key={a}
+                onClick={() => { setSelected(a); setCustom(""); }}
+                className={`py-3 rounded-xl font-bold text-sm border transition-all ${
+                  selected === a && !custom
+                    ? "bg-[#00e5ff] text-black border-[#00e5ff]"
+                    : "bg-[#080c10] border-[#1e2d42] text-[#e2eaf4] hover:border-[#00e5ff]/40"
+                }`}
+              >
+                ${a}
+              </button>
+            ))}
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-xs font-mono text-[#6b7d95] mb-2 uppercase tracking-widest">Custom amount</label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6b7d95]">$</span>
+              <input
+                type="number"
+                min="1"
+                value={custom}
+                onChange={(e) => { setCustom(e.target.value); setSelected(null); }}
+                placeholder="Enter amount"
+                className="w-full bg-[#080c10] border border-[#1e2d42] rounded-xl pl-8 pr-4 py-3 text-sm text-[#e2eaf4] placeholder-[#3a4a5c] focus:outline-none focus:border-[#00e5ff]/50 transition-colors"
+              />
+            </div>
+          </div>
+
+          <button
+            onClick={handleDonate}
+            disabled={!amount || amount < 1 || loading}
+            className="w-full bg-[#f97373] hover:bg-[#f85555] text-white font-black py-4 rounded-xl transition-all hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:translate-y-0 text-lg"
+          >
+            {loading ? "Redirecting..." : `Donate ${amount ? "$" + amount : ""} ❤️`}
+          </button>
+
+          <p className="text-center text-xs text-[#3a4a5c] font-mono mt-4">
+            Secured by Stripe · No account needed
+          </p>
+        </div>
+
+        <p className="text-center text-xs text-[#3a4a5c] mt-6">
+          <Link href="/" className="hover:text-[#6b7d95] transition-colors">← Back to home</Link>
+        </p>
       </div>
     </main>
   );
 }
-
