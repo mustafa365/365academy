@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -95,7 +95,12 @@ export default function Home() {
                   Start with zero database knowledge and master SQL from the ground up. Learn SELECT, JOIN, GROUP BY, indexes, and real-world database design.
                 </p>
                 <ul className="space-y-2 mb-6">
-                  {["Write complex SQL queries with confidence", "Design and optimize real databases", "Work with PostgreSQL & SQL Server", "Build projects for your portfolio"].map(item => (
+                  {[
+                    "Follow a step-by-step path from basics to advanced",
+                    "Solve interactive SQL exercises directly in your browser",
+                    "Design and optimize real databases used in companies",
+                    "Build portfolio-ready projects and prepare for interviews",
+                  ].map(item => (
                     <li key={item} className="flex items-center gap-3 text-sm text-[#b8c5d6]">
                       <span className="text-[#00e5ff] text-xs">✓</span> {item}
                     </li>
@@ -126,7 +131,12 @@ export default function Home() {
                   Go from no cloud experience to managing Azure infrastructure like a pro. Covers VMs, networking, storage, security, and the AZ-104 exam prep.
                 </p>
                 <ul className="space-y-2 mb-6">
-                  {["Set up and manage Azure resources", "Configure VMs, VNets & storage", "Implement security and compliance", "Prepare for the AZ-104 certification"].map(item => (
+                  {[
+                    "Follow a complete AZ-104 aligned roadmap from zero",
+                    "Practice real-world admin tasks step by step",
+                    "Work through checklists, diagrams and command cheat-sheets",
+                    "Prepare confidently for Azure admin jobs and certifications",
+                  ].map(item => (
                     <li key={item} className="flex items-center gap-3 text-sm text-[#b8c5d6]">
                       <span className="text-[#00e5ff] text-xs">✓</span> {item}
                     </li>
@@ -170,6 +180,101 @@ export default function Home() {
                 <div className="text-[#6b7d95] text-sm leading-relaxed">{f.desc}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LEARNING PATH SECTION */}
+      <section className="py-20 px-6 border-t border-[#1e2d42] bg-[#080c10]">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+          <div>
+            <div className="flex items-center gap-3 text-[#00e5ff] text-xs font-mono tracking-widest uppercase mb-4">
+              <div className="w-6 h-px bg-[#00e5ff]" /> Your learning journey
+            </div>
+            <h2 className="text-3xl font-black tracking-tight mb-6">
+              From complete beginner to confident SQL & Azure pro.
+            </h2>
+            <ol className="space-y-4 text-sm">
+              <li className="flex gap-3">
+                <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/40 text-xs font-bold text-[#00e5ff]">
+                  1
+                </span>
+                <div>
+                  <div className="font-semibold mb-1">Watch clear, beginner‑friendly lessons</div>
+                  <p className="text-[#6b7d95]">
+                    Start with no experience. Ahmed explains every concept from scratch using simple language and real examples.
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/40 text-xs font-bold text-[#00e5ff]">
+                  2
+                </span>
+                <div>
+                  <div className="font-semibold mb-1">Practice inside the website</div>
+                  <p className="text-[#6b7d95]">
+                    Use the built‑in SQL practice lab and Python playground to write real queries and code directly in your browser — no installs needed.
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/40 text-xs font-bold text-[#00e5ff]">
+                  3
+                </span>
+                <div>
+                  <div className="font-semibold mb-1">Test yourself with quizzes</div>
+                  <p className="text-[#6b7d95]">
+                    Reinforce every section with carefully designed quizzes — including real SQL questions — so you know you truly understand.
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/40 text-xs font-bold text-[#00e5ff]">
+                  4
+                </span>
+                <div>
+                  <div className="font-semibold mb-1">Track progress & level up</div>
+                  <p className="text-[#6b7d95]">
+                    Earn XP, level up in the dashboard, and climb the leaderboard as you complete lessons, exercises, and quizzes.
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-6 md:p-7">
+            <div className="text-xs font-mono text-[#6b7d95] mb-2">// One‑stop learning hub</div>
+            <h3 className="text-xl font-black mb-3">Everything you need in one place</h3>
+            <p className="text-[#6b7d95] text-sm leading-relaxed mb-5">
+              365Academy is designed so that someone with zero SQL or Azure experience can land here and slowly become an expert — without
+              jumping between different websites, tools, or random tutorials.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="bg-[#080c10] border border-[#1e2d42] rounded-xl p-3">
+                <div className="font-semibold mb-1">Structured curriculum</div>
+                <p className="text-[#6b7d95]">
+                  4+ sections per course, dozens of lessons, and a clear order to follow.
+                </p>
+              </div>
+              <div className="bg-[#080c10] border border-[#1e2d42] rounded-xl p-3">
+                <div className="font-semibold mb-1">Hands‑on practice</div>
+                <p className="text-[#6b7d95]">
+                  Interactive SQL exercises, Python playground, and realistic Azure tasks.
+                </p>
+              </div>
+              <div className="bg-[#080c10] border border-[#1e2d42] rounded-xl p-3">
+                <div className="font-semibold mb-1">Progress & motivation</div>
+                <p className="text-[#6b7d95]">
+                  XP system, levels, quizzes, and a leaderboard to keep you engaged.
+                </p>
+              </div>
+              <div className="bg-[#080c10] border border-[#1e2d42] rounded-xl p-3">
+                <div className="font-semibold mb-1">Lifetime access</div>
+                <p className="text-[#6b7d95]">
+                  Come back any time to review, practice, and refresh your knowledge.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

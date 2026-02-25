@@ -1,13 +1,12 @@
-﻿"use client";
-import { useState, useEffect } from "react";
+"use client";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { getCourse, getSection } from "@/lib/courseData";
 
 export default function QuizPage({ params }: { params: { quizId: string } }) {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const courseSlug = searchParams.get("course") ?? "";
   const sectionId = searchParams.get("section") ?? "";
@@ -21,10 +20,6 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
 
   const course = getCourse(courseSlug);
   const section = getSection(courseSlug, sectionId);
-
-  useEffect(() => {
-    if (status === "unauthenticated") router.push("/login");
-  }, [status, router]);
 
   if (!course || !section) {
     return (
@@ -56,22 +51,24 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
     setSubmitted(true);
     setSubmitting(false);
 
-    // Save to DB
-    await fetch("/api/quiz", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        quizId: quiz.id,
-        score: pct,
-        passed: pass,
-        xpEarned,
-        answers: questions.map((q) => ({
-          questionId: q.id,
-          answer: answers[q.id] ?? "",
-          isCorrect: answers[q.id] === q.correctAnswer,
-        })),
-      }),
-    });
+    // Save to DB only if logged in
+    if (session?.user) {
+      await fetch("/api/quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quizId: quiz.id,
+          score: pct,
+          passed: pass,
+          xpEarned,
+          answers: questions.map((q) => ({
+            questionId: q.id,
+            answer: answers[q.id] ?? "",
+            isCorrect: answers[q.id] === q.correctAnswer,
+          })),
+        }),
+      });
+    }
   }
 
   return (

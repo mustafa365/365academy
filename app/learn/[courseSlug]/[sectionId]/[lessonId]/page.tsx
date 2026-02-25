@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getCourse, getLesson } from "@/lib/courseData";
 import { EXERCISES } from "@/lib/sqlExercises";
@@ -241,17 +240,12 @@ export default function LessonPage({
   params: { courseSlug: string; sectionId: string; lessonId: string };
 }) {
   const { data: session, status } = useSession();
-  const router = useRouter();
   const [completed, setCompleted] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [showXP, setShowXP] = useState(false);
 
   const course = getCourse(params.courseSlug);
   const result = getLesson(params.courseSlug, params.lessonId);
-
-  useEffect(() => {
-    if (status === "unauthenticated") router.push("/login");
-  }, [status, router]);
 
   useEffect(() => {
     if (!session?.user?.id || !result) return;
@@ -382,7 +376,14 @@ export default function LessonPage({
 
         {/* Complete button */}
         <div className="flex items-center gap-3">
-          {!completed ? (
+          {!session?.user?.id ? (
+            <Link
+              href="/login"
+              className="flex-1 bg-[#0e1420] border border-[#1e2d42] text-[#e2eaf4] font-semibold py-4 rounded-xl hover:border-[#00e5ff]/40 hover:text-white transition-all text-sm text-center"
+            >
+              Sign in to save your progress and XP →
+            </Link>
+          ) : !completed ? (
             <button
               onClick={handleComplete}
               disabled={completing}

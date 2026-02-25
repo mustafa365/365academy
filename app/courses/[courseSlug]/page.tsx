@@ -1,5 +1,5 @@
-﻿import { auth } from "@/auth";
-import { redirect, notFound } from "next/navigation";
+import { auth } from "@/auth";
+import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getCourse } from "@/lib/courseData";
 import Link from "next/link";
@@ -10,27 +10,31 @@ export default async function CourseDetailPage({
   params: { courseSlug: string };
 }) {
   const session = await auth();
-  if (!session?.user?.id) redirect("/login");
 
   const course = getCourse(params.courseSlug);
   if (!course) notFound();
 
-  const progress = await prisma.lessonProgress.findMany({
-    where: { userId: session.user.id },
-  });
+  let completedLessonIds = new Set<string>();
+  let passedQuizIds = new Set<string>();
 
-  const quizAttempts = await prisma.quizAttempt.findMany({
-    where: { userId: session.user.id },
-    include: { quiz: true },
-  });
+  if (session?.user?.id) {
+    const progress = await prisma.lessonProgress.findMany({
+      where: { userId: session.user.id },
+    });
 
-  const completedLessonIds = new Set(
-    progress.filter((p) => p.completed).map((p) => p.lessonId)
-  );
+    const quizAttempts = await prisma.quizAttempt.findMany({
+      where: { userId: session.user.id },
+      include: { quiz: true },
+    });
 
-  const passedQuizIds = new Set(
-    quizAttempts.filter((a) => a.passed).map((a) => a.quizId)
-  );
+    completedLessonIds = new Set(
+      progress.filter((p) => p.completed).map((p) => p.lessonId)
+    );
+
+    passedQuizIds = new Set(
+      quizAttempts.filter((a) => a.passed).map((a) => a.quizId)
+    );
+  }
 
   function isSectionUnlocked(_sectionIndex: number): boolean {
     return true; // temporarily unlocked
