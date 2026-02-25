@@ -8,20 +8,31 @@ export default function DonatePage() {
   const [selected, setSelected] = useState<number | null>(10);
   const [custom, setCustom] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const amount = custom ? parseInt(custom) : selected;
 
   async function handleDonate() {
     if (!amount || amount < 1) return;
     setLoading(true);
-    const res = await fetch("/api/donate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount }),
-    });
-    const data = await res.json();
-    if (data.url) window.location.href = data.url;
-    else setLoading(false);
+    setError("");
+    try {
+      const res = await fetch("/api/donate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setError(data.error || "Something went wrong. Please try again.");
+        setLoading(false);
+      }
+    } catch {
+      setError("Network error. Please try again.");
+      setLoading(false);
+    }
   }
 
   return (
@@ -83,6 +94,9 @@ export default function DonatePage() {
             {loading ? "Redirecting..." : `Donate ${amount ? "$" + amount : ""} ❤️`}
           </button>
 
+          {error && (
+            <p className="text-center text-xs text-red-400 font-mono mt-3">{error}</p>
+          )}
           <p className="text-center text-xs text-[#3a4a5c] font-mono mt-4">
             Secured by Stripe · No account needed
           </p>
