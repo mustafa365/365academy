@@ -79,6 +79,7 @@ model QuizAttempt {
   score       Float
   xpEarned    Int      @default(0)
   passed      Boolean
+  timeSpent   Int      @default(0)
   completedAt DateTime @default(now())
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
