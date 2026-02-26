@@ -24,7 +24,6 @@ export default async function CourseDetailPage({
 
     const quizAttempts = await prisma.quizAttempt.findMany({
       where: { userId: session.user.id },
-      include: { quiz: true },
     });
 
     completedLessonIds = new Set(
