@@ -16,9 +16,9 @@ export default function RegisterPage() {
     setLoading(true);
     setError("");
     const res = await fetch("/api/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, email, password }) });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     setLoading(false);
-    if (!res.ok) { setError(data.error ?? "Something went wrong."); } else { router.push("/login"); }
+    if (!res.ok) { setError(data.error ?? "Something went wrong. Please try again."); } else { router.push("/login"); }
   }
 
   return (
