@@ -8,32 +8,32 @@ export async function GET() {
   try {
     await prisma.$queryRaw`SELECT 1`;
     results.db = "ok";
-  } catch (e: any) {
-    results.db = "ERROR: " + e.message;
+  } catch (e) {
+    results.db = "ERROR: " + (e instanceof Error ? e.message : String(e));
   }
 
   // Test User table
   try {
     const count = await prisma.user.count();
     results.users = `ok (${count} users)`;
-  } catch (e: any) {
-    results.users = "ERROR: " + e.message;
+  } catch (e) {
+    results.users = "ERROR: " + (e instanceof Error ? e.message : String(e));
   }
 
   // Test QuizAttempt table (timeSpent issue)
   try {
     const count = await prisma.quizAttempt.count();
     results.quizAttempts = `ok (${count} rows)`;
-  } catch (e: any) {
-    results.quizAttempts = "ERROR: " + e.message;
+  } catch (e) {
+    results.quizAttempts = "ERROR: " + (e instanceof Error ? e.message : String(e));
   }
 
   // Test LessonProgress table
   try {
     const count = await prisma.lessonProgress.count();
     results.lessonProgress = `ok (${count} rows)`;
-  } catch (e: any) {
-    results.lessonProgress = "ERROR: " + e.message;
+  } catch (e) {
+    results.lessonProgress = "ERROR: " + (e instanceof Error ? e.message : String(e));
   }
 
   return NextResponse.json(results);
