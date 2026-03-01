@@ -42,8 +42,8 @@ function CourseTimer({ courseSlug }: { courseSlug: string }) {
   if (!elapsed) return null;
 
   return (
-    <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#3a4a5c]">
-      <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff] animate-pulse inline-block" />
+    <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#3f3f50]">
+      <span className="w-1.5 h-1.5 rounded-full bg-[#7c3aed] animate-pulse inline-block" />
       {elapsed} in course
     </div>
   );
@@ -54,7 +54,7 @@ function CourseTimer({ courseSlug }: { courseSlug: string }) {
 function renderInline(text: string): string {
   return text
     .replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
-    .replace(/`([^`]+)`/g, '<code class="bg-[#080c10] border border-[#1e2d42] text-[#00e5ff] px-1.5 py-0.5 rounded text-xs font-mono">$1</code>')
+    .replace(/`([^`]+)`/g, '<code class="bg-[#0a0a0f] border border-[#1c1c2a] text-[#a78bfa] px-1.5 py-0.5 rounded text-xs font-mono">$1</code>')
     .replace(/\*(.+?)\*/g, "<em>$1</em>");
 }
 
@@ -79,17 +79,17 @@ function MarkdownContent({ content }: { content: string }) {
       elements.push(
         <div key={`code-${i}`} className="my-5">
           {lang && (
-            <div className="flex items-center gap-2 bg-[#0a1219] border border-[#1e2d42] border-b-0 rounded-t-xl px-4 py-2">
+            <div className="flex items-center gap-2 bg-[#0a1219] border border-[#1c1c2a] border-b-0 rounded-t-xl px-4 py-2">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-500/50" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                 <div className="w-3 h-3 rounded-full bg-green-500/50" />
               </div>
-              <span className="text-[#3a4a5c] text-xs font-mono ml-1">{lang}</span>
+              <span className="text-[#3f3f50] text-xs font-mono ml-1">{lang}</span>
             </div>
           )}
           <pre
-            className={`bg-[#060a0e] border border-[#1e2d42] ${
+            className={`bg-[#060a0e] border border-[#1c1c2a] ${
               lang ? "rounded-b-xl rounded-tr-xl" : "rounded-xl"
             } p-5 overflow-x-auto`}
           >
@@ -115,7 +115,7 @@ function MarkdownContent({ content }: { content: string }) {
     // H2
     if (line.startsWith("## ")) {
       elements.push(
-        <h2 key={i} className="text-xl font-bold text-[#e2eaf4] mt-6 mb-2 border-b border-[#1e2d42] pb-2">
+        <h2 key={i} className="text-xl font-bold text-[#fafafa] mt-6 mb-2 border-b border-[#1c1c2a] pb-2">
           {line.slice(3)}
         </h2>
       );
@@ -125,7 +125,7 @@ function MarkdownContent({ content }: { content: string }) {
     // H3
     if (line.startsWith("### ")) {
       elements.push(
-        <h3 key={i} className="text-base font-bold text-[#00e5ff] mt-4 mb-1">
+        <h3 key={i} className="text-base font-bold text-[#a78bfa] mt-4 mb-1">
           {line.slice(4)}
         </h3>
       );
@@ -135,7 +135,7 @@ function MarkdownContent({ content }: { content: string }) {
 
     // Horizontal rule
     if (line.trim() === "---" || line.trim() === "***") {
-      elements.push(<hr key={i} className="border-[#1e2d42] my-5" />);
+      elements.push(<hr key={i} className="border-[#1c1c2a] my-5" />);
       i++;
       continue;
     }
@@ -161,11 +161,11 @@ function MarkdownContent({ content }: { content: string }) {
         <div key={`table-${i}`} className="overflow-x-auto my-5">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="border-b border-[#1e2d42]">
+              <tr className="border-b border-[#1c1c2a]">
                 {headers.map((h, hi) => (
                   <th
                     key={hi}
-                    className="text-left py-2 px-3 text-[#00e5ff] font-mono text-xs uppercase tracking-wider"
+                    className="text-left py-2 px-3 text-[#a78bfa] font-mono text-xs uppercase tracking-wider"
                   >
                     {h}
                   </th>
@@ -176,7 +176,7 @@ function MarkdownContent({ content }: { content: string }) {
               {rows.map((row, ri) => (
                 <tr
                   key={ri}
-                  className="border-b border-[#1e2d42]/50 hover:bg-[#080c10]/50 transition-colors"
+                  className="border-b border-[#1c1c2a]/50 hover:bg-[#0a0a0f]/50 transition-colors"
                 >
                   {row.map((cell, ci) => (
                     <td
@@ -208,7 +208,7 @@ function MarkdownContent({ content }: { content: string }) {
         <ul key={`ul-${i}`} className="my-3 space-y-1.5">
           {listItems.map((item, li) => (
             <li key={li} className="flex items-start gap-2.5 text-sm text-[#b8c5d6]">
-              <span className="text-[#00e5ff] mt-0.5 flex-shrink-0 font-bold">•</span>
+              <span className="text-[#a78bfa] mt-0.5 flex-shrink-0 font-bold">•</span>
               <span dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
             </li>
           ))}
@@ -244,7 +244,7 @@ function MarkdownContent({ content }: { content: string }) {
       elements.push(
         <blockquote
           key={i}
-          className="border-l-4 border-[#00e5ff]/50 pl-4 my-3 italic text-[#6b7d95] text-sm"
+          className="border-l-4 border-[#7c3aed]/50 pl-4 my-3 italic text-[#71717a] text-sm"
         >
           {line.slice(2)}
         </blockquote>
@@ -316,19 +316,19 @@ export default function LessonPage({
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-[#080c10] flex items-center justify-center">
-        <div className="w-2 h-2 rounded-full bg-[#00e5ff] animate-pulse" />
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <div className="w-2 h-2 rounded-full bg-[#7c3aed] animate-pulse" />
       </div>
     );
   }
 
   if (!course || !result) {
     return (
-      <div className="min-h-screen bg-[#080c10] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-4">🔍</div>
-          <p className="text-[#6b7d95]">Lesson not found.</p>
-          <Link href="/dashboard" className="text-[#00e5ff] text-sm mt-3 block hover:underline">
+          <p className="text-[#71717a]">Lesson not found.</p>
+          <Link href="/dashboard" className="text-[#a78bfa] text-sm mt-3 block hover:underline">
             Back to Dashboard
           </Link>
         </div>
@@ -355,25 +355,25 @@ export default function LessonPage({
   ];
 
   return (
-    <main className="min-h-screen bg-[#080c10] text-[#e2eaf4]">
+    <main className="min-h-screen bg-[#0a0a0f] text-[#fafafa]">
       {showXP && (
-        <div className="fixed top-24 right-6 z-50 bg-[#00e5ff] text-black font-black px-6 py-3 rounded-xl shadow-lg animate-bounce">
+        <div className="fixed top-24 right-6 z-50 bg-[#7c3aed] text-white font-black px-6 py-3 rounded-xl shadow-lg animate-bounce">
           +{lesson.xp} XP! 🎉
         </div>
       )}
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[#1e2d42] bg-[#080c10]/90 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[#1c1c2a] bg-[#0a0a0f]/90 backdrop-blur-xl">
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link
             href={`/courses/${course.slug}`}
-            className="flex items-center gap-2 text-[#6b7d95] hover:text-white text-sm transition-colors"
+            className="flex items-center gap-2 text-[#71717a] hover:text-white text-sm transition-colors"
           >
             ← {course.title}
           </Link>
           <div className="flex items-center gap-4">
             <CourseTimer courseSlug={course.slug} />
-            <div className="text-[#6b7d95] text-xs font-mono hidden md:block">
+            <div className="text-[#71717a] text-xs font-mono hidden md:block">
               {section.title}
             </div>
             <div
@@ -395,12 +395,12 @@ export default function LessonPage({
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4 flex-wrap">
             {lesson.readingTime && (
-              <div className="text-xs font-mono px-3 py-1 rounded-full border text-[#00e5ff] bg-[#00e5ff]/10 border-[#00e5ff]/30">
+              <div className="text-xs font-mono px-3 py-1 rounded-full border text-[#a78bfa] bg-[#7c3aed]/10 border-[#7c3aed]/30">
                 ⏱ {lesson.readingTime} read
               </div>
             )}
             {!lesson.readingTime && (
-              <div className="text-xs font-mono px-3 py-1 rounded-full border text-[#00e5ff] bg-[#00e5ff]/10 border-[#00e5ff]/30">
+              <div className="text-xs font-mono px-3 py-1 rounded-full border text-[#a78bfa] bg-[#7c3aed]/10 border-[#7c3aed]/30">
                 ⏱ {lesson.duration}
               </div>
             )}
@@ -411,19 +411,19 @@ export default function LessonPage({
             )}
           </div>
           <h1 className="text-3xl font-black tracking-tight mb-2">{lesson.title}</h1>
-          <p className="text-[#6b7d95]">{lesson.description}</p>
+          <p className="text-[#71717a]">{lesson.description}</p>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-6 bg-[#0e1420] border border-[#1e2d42] rounded-xl p-1">
+        <div className="flex gap-1 mb-6 bg-[#0d0d15] border border-[#1c1c2a] rounded-xl p-1">
           {tabs.filter((t) => t.available).map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                 tab === t.id
-                  ? "bg-[#00e5ff] text-black"
-                  : "text-[#6b7d95] hover:text-white"
+                  ? "bg-[#7c3aed] text-white"
+                  : "text-[#71717a] hover:text-white"
               }`}
             >
               <span>{t.icon}</span>
@@ -434,7 +434,7 @@ export default function LessonPage({
 
         {/* Tab: Learn */}
         {tab === "learn" && (
-          <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-6 md:p-8 mb-8">
+          <div className="bg-[#0d0d15] border border-[#1c1c2a] rounded-2xl p-6 md:p-8 mb-8">
             <MarkdownContent content={lesson.content} />
           </div>
         )}
@@ -443,7 +443,7 @@ export default function LessonPage({
         {tab === "practice" && hasExercises && (
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-1 h-6 rounded-full bg-[#00e5ff]" />
+              <div className="w-1 h-6 rounded-full bg-[#7c3aed]" />
               <h2 className="text-lg font-black tracking-tight">Practice Exercises</h2>
             </div>
             <SqlEditor
@@ -458,20 +458,20 @@ export default function LessonPage({
         {/* Tab: Real World */}
         {tab === "realworld" && hasRealWorld && (
           <div className="mb-8">
-            <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl overflow-hidden">
+            <div className="bg-[#0d0d15] border border-[#1c1c2a] rounded-2xl overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-[#001a2e] to-[#002a3e] border-b border-[#1e2d42] px-6 py-4 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30 flex items-center justify-center text-sm">
+              <div className="bg-gradient-to-r from-[#001a2e] to-[#002a3e] border-b border-[#1c1c2a] px-6 py-4 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#7c3aed]/10 border border-[#7c3aed]/30 flex items-center justify-center text-sm">
                   {course.slug === "azure" ? "👩‍💼" : "👨‍💻"}
                 </div>
                 <div>
                   <div className="text-sm font-bold text-white">
                     {course.slug === "azure" ? "Sarah — Azure Admin at Contoso Bank" : "Alex — Data Engineer at Meta"}
                   </div>
-                  <div className="text-xs text-[#6b7d95] font-mono">Real world scenario</div>
+                  <div className="text-xs text-[#71717a] font-mono">Real world scenario</div>
                 </div>
                 <div className="ml-auto">
-                  <span className="text-xs font-mono px-2 py-1 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/20 text-[#00e5ff]">
+                  <span className="text-xs font-mono px-2 py-1 rounded-full bg-[#7c3aed]/10 border border-[#7c3aed]/20 text-[#a78bfa]">
                     // MySQL
                   </span>
                 </div>
@@ -481,7 +481,7 @@ export default function LessonPage({
                 <MarkdownContent content={lesson.realWorld!} />
               </div>
             </div>
-            <p className="text-xs text-[#3a4a5c] font-mono mt-3 text-center">
+            <p className="text-xs text-[#3f3f50] font-mono mt-3 text-center">
               {course.slug === "azure" ? "Sarah is a fictional character used to illustrate real-world Azure concepts" : "Alex is a fictional character used to illustrate real-world SQL concepts"}
             </p>
           </div>
@@ -492,7 +492,7 @@ export default function LessonPage({
           {!session?.user?.id ? (
             <Link
               href="/login"
-              className="flex-1 bg-[#0e1420] border border-[#1e2d42] text-[#e2eaf4] font-semibold py-4 rounded-xl hover:border-[#00e5ff]/40 hover:text-white transition-all text-sm text-center"
+              className="flex-1 bg-[#0d0d15] border border-[#1c1c2a] text-[#fafafa] font-semibold py-4 rounded-xl hover:border-[#7c3aed]/40 hover:text-white transition-all text-sm text-center"
             >
               Sign in to save your progress and XP →
             </Link>
@@ -500,7 +500,7 @@ export default function LessonPage({
             <button
               onClick={handleComplete}
               disabled={completing}
-              className="flex-1 bg-[#00e5ff] text-black font-bold py-4 rounded-xl hover:bg-[#00c4db] transition-all disabled:opacity-50 text-base"
+              className="flex-1 bg-[#7c3aed] text-white font-bold py-4 rounded-xl hover:bg-[#6d28d9] transition-all disabled:opacity-50 text-base"
             >
               {completing ? "Saving..." : `✓ Mark Complete (+${lesson.xp} XP)`}
             </button>
@@ -534,7 +534,7 @@ export default function LessonPage({
             {nextLesson && isLastInSection && (
               <Link
                 href={`/learn/${course.slug}/${nextLesson.section.id}/${nextLesson.id}`}
-                className="w-full flex items-center justify-center gap-2 border border-[#1e2d42] text-[#6b7d95] font-medium py-3 rounded-xl hover:border-[#00e5ff]/40 hover:text-white transition-all text-sm"
+                className="w-full flex items-center justify-center gap-2 border border-[#1c1c2a] text-[#71717a] font-medium py-3 rounded-xl hover:border-[#7c3aed]/40 hover:text-white transition-all text-sm"
               >
                 Skip to next section →
               </Link>
@@ -551,8 +551,8 @@ export default function LessonPage({
         )}
 
         {/* Section lesson list */}
-        <div className="mt-10 pt-6 border-t border-[#1e2d42]">
-          <p className="text-xs font-mono text-[#6b7d95] mb-3">// {section.title}</p>
+        <div className="mt-10 pt-6 border-t border-[#1c1c2a]">
+          <p className="text-xs font-mono text-[#71717a] mb-3">// {section.title}</p>
           <div className="space-y-1">
             {section.lessons.map((l, li) => (
               <Link
@@ -560,14 +560,14 @@ export default function LessonPage({
                 href={`/learn/${course.slug}/${section.id}/${l.id}`}
                 className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-colors ${
                   l.id === lesson.id
-                    ? "bg-[#00e5ff]/10 border border-[#00e5ff]/30 text-[#00e5ff]"
-                    : "hover:bg-[#0e1420] text-[#6b7d95] hover:text-white"
+                    ? "bg-[#7c3aed]/10 border border-[#7c3aed]/30 text-[#a78bfa]"
+                    : "hover:bg-[#0d0d15] text-[#71717a] hover:text-white"
                 }`}
               >
                 <span className="font-mono text-xs w-4">{li + 1}</span>
                 <span className="flex-1">{l.title}</span>
                 {l.readingTime && (
-                  <span className="text-xs font-mono text-[#3a4a5c]">{l.readingTime}</span>
+                  <span className="text-xs font-mono text-[#3f3f50]">{l.readingTime}</span>
                 )}
                 <span
                   className="text-xs font-mono"

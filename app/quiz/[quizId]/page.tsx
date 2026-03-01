@@ -23,9 +23,9 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
 
   if (!course || !section) {
     return (
-      <div className="min-h-screen bg-[#080c10] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center">
         Quiz not found.{" "}
-        <Link href="/dashboard" className="text-[#00e5ff] ml-2">Go to Dashboard</Link>
+        <Link href="/dashboard" className="text-[#a78bfa] ml-2">Go to Dashboard</Link>
       </div>
     );
   }
@@ -72,22 +72,22 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
   }
 
   return (
-    <main className="min-h-screen bg-[#080c10] text-[#e2eaf4]">
-      <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[#1e2d42] bg-[#080c10]/90 backdrop-blur-xl">
+    <main className="min-h-screen bg-[#0a0a0f] text-[#fafafa]">
+      <nav className="fixed top-0 left-0 right-0 z-40 border-b border-[#1c1c2a] bg-[#0a0a0f]/90 backdrop-blur-xl">
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href={`/courses/${courseSlug}`} className="text-[#6b7d95] hover:text-white text-sm transition-colors">
+          <Link href={`/courses/${courseSlug}`} className="text-[#71717a] hover:text-white text-sm transition-colors">
             ← Back to {course.title}
           </Link>
-          <div className="text-[#6b7d95] text-xs font-mono">Section Quiz</div>
+          <div className="text-[#71717a] text-xs font-mono">Section Quiz</div>
         </div>
       </nav>
 
       <div className="pt-24 pb-16 px-6 max-w-3xl mx-auto">
         {/* Quiz header */}
         <div className="mb-8">
-          <div className="text-[#6b7d95] text-xs font-mono mb-2">{course.title} · {section.title}</div>
+          <div className="text-[#71717a] text-xs font-mono mb-2">{course.title} · {section.title}</div>
           <h1 className="text-3xl font-black tracking-tight mb-1">Section Quiz</h1>
-          <p className="text-[#6b7d95] text-sm">{questions.length} questions · Minimum 70% to pass · Unlock next section</p>
+          <p className="text-[#71717a] text-sm">{questions.length} questions · Minimum 70% to pass · Unlock next section</p>
         </div>
 
         {/* Score result */}
@@ -96,7 +96,7 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
             <div className="text-6xl mb-4">{passed ? "🎉" : "😤"}</div>
             <div className={`text-5xl font-black mb-2 ${passed ? "text-emerald-400" : "text-red-400"}`}>{score}%</div>
             <div className="font-bold text-xl mb-2">{passed ? "You passed! 🚀" : "Not quite — try again!"}</div>
-            <p className="text-[#6b7d95] text-sm mb-4">
+            <p className="text-[#71717a] text-sm mb-4">
               {passed
                 ? `You earned +200 XP and unlocked the next section!`
                 : `You need 70% to pass. You scored ${score}%. Keep studying!`}
@@ -104,7 +104,7 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
             <div className="flex gap-3 justify-center flex-wrap">
               <button
                 onClick={() => setShowExplanations(!showExplanations)}
-                className="px-5 py-2.5 border border-[#1e2d42] rounded-xl text-sm font-medium hover:border-[#00e5ff]/40 transition-colors"
+                className="px-5 py-2.5 border border-[#1c1c2a] rounded-xl text-sm font-medium hover:border-[#7c3aed]/40 transition-colors"
               >
                 {showExplanations ? "Hide" : "Show"} Explanations
               </button>
@@ -119,7 +119,7 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
               {passed && (
                 <Link
                   href={`/courses/${courseSlug}`}
-                  className="px-5 py-2.5 bg-[#00e5ff] text-black rounded-xl text-sm font-bold hover:bg-[#00c4db] transition-colors"
+                  className="px-5 py-2.5 bg-[#7c3aed] text-white rounded-xl text-sm font-bold hover:bg-[#6d28d9] transition-colors"
                 >
                   Continue Course →
                 </Link>
@@ -135,9 +135,9 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
             const isCorrect = selected === q.correctAnswer;
 
             return (
-              <div key={q.id} className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-6">
+              <div key={q.id} className="bg-[#0d0d15] border border-[#1c1c2a] rounded-2xl p-6">
                 <div className="flex items-start gap-3 mb-5">
-                  <div className="w-7 h-7 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30 flex items-center justify-center text-[#00e5ff] font-mono text-xs font-bold flex-shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-full bg-[#7c3aed]/10 border border-[#7c3aed]/30 flex items-center justify-center text-[#a78bfa] font-mono text-xs font-bold flex-shrink-0 mt-0.5">
                     {qi + 1}
                   </div>
                   <p className="font-semibold leading-relaxed">{q.question}</p>
@@ -149,8 +149,8 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
                     const showResult = submitted || showExplanations;
                     const isRight = option === q.correctAnswer;
 
-                    let style = "border-[#1e2d42] text-[#b8c5d6] hover:border-[#00e5ff]/40";
-                    if (isSelected && !showResult) style = "border-[#00e5ff]/60 text-white bg-[#00e5ff]/5";
+                    let style = "border-[#1c1c2a] text-[#b8c5d6] hover:border-[#7c3aed]/40";
+                    if (isSelected && !showResult) style = "border-[#7c3aed]/60 text-white bg-[#7c3aed]/5";
                     if (showResult && isRight) style = "border-emerald-400/40 text-emerald-400 bg-emerald-400/5";
                     if (showResult && isSelected && !isRight) style = "border-red-400/40 text-red-400 bg-red-400/5";
 
@@ -168,11 +168,11 @@ export default function QuizPage({ params }: { params: { quizId: string } }) {
                 </div>
 
                 {submitted && showExplanations && (
-                  <div className="bg-[#080c10] border border-[#1e2d42] rounded-xl p-4">
+                  <div className="bg-[#0a0a0f] border border-[#1c1c2a] rounded-xl p-4">
                     <div className={`text-xs font-mono mb-1 ${isCorrect ? "text-emerald-400" : "text-red-400"}`}>
                       {isCorrect ? "✓ Correct!" : "✗ Incorrect"}
                     </div>
-                    <p className="text-[#6b7d95] text-sm">{q.explanation}</p>
+                    <p className="text-[#71717a] text-sm">{q.explanation}</p>
                   </div>
                 )}
               </div>

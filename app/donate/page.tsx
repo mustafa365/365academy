@@ -36,24 +36,24 @@ export default function DonatePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#080c10] text-[#e2eaf4] flex items-center justify-center px-6">
-      <div className="fixed inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: `linear-gradient(rgba(0,229,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.05) 1px, transparent 1px)`, backgroundSize: "60px 60px" }} />
+    <main className="min-h-screen bg-[#0a0a0f] text-[#fafafa] flex items-center justify-center px-6">
+      <div className="fixed inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: `linear-gradient(rgba(124,58,237,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.05) 1px, transparent 1px)`, backgroundSize: "60px 60px" }} />
 
       <div className="relative w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-3 mb-6">
-            <div className="w-2 h-2 rounded-full bg-[#00e5ff] shadow-[0_0_12px_#00e5ff] animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-[#7c3aed] shadow-[0_0_12px_#7c3aed] animate-pulse" />
             <span className="font-bold text-lg tracking-tight">365Academy</span>
           </Link>
           <div className="text-4xl mb-3">❤️</div>
           <h1 className="text-3xl font-black tracking-tight mb-2">Support 365Academy</h1>
-          <p className="text-[#6b7d95] text-sm leading-relaxed">
+          <p className="text-[#71717a] text-sm leading-relaxed">
             365Academy is completely free. Your donation helps keep it running and growing for everyone.
           </p>
         </div>
 
-        <div className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl p-8">
-          <p className="text-xs font-mono text-[#6b7d95] uppercase tracking-widest mb-4">Choose an amount</p>
+        <div className="bg-[#0d0d15] border border-[#1c1c2a] rounded-2xl p-8">
+          <p className="text-xs font-mono text-[#71717a] uppercase tracking-widest mb-4">Choose an amount</p>
 
           <div className="grid grid-cols-4 gap-3 mb-4">
             {PRESET_AMOUNTS.map((a) => (
@@ -62,8 +62,8 @@ export default function DonatePage() {
                 onClick={() => { setSelected(a); setCustom(""); }}
                 className={`py-3 rounded-xl font-bold text-sm border transition-all ${
                   selected === a && !custom
-                    ? "bg-[#00e5ff] text-black border-[#00e5ff]"
-                    : "bg-[#080c10] border-[#1e2d42] text-[#e2eaf4] hover:border-[#00e5ff]/40"
+                    ? "bg-[#7c3aed] text-white border-[#7c3aed]"
+                    : "bg-[#0a0a0f] border-[#1c1c2a] text-[#fafafa] hover:border-[#7c3aed]/40"
                 }`}
               >
                 ${a}
@@ -72,16 +72,16 @@ export default function DonatePage() {
           </div>
 
           <div className="mb-6">
-            <label className="block text-xs font-mono text-[#6b7d95] mb-2 uppercase tracking-widest">Custom amount</label>
+            <label className="block text-xs font-mono text-[#71717a] mb-2 uppercase tracking-widest">Custom amount</label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6b7d95]">$</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#71717a]">$</span>
               <input
                 type="number"
                 min="1"
                 value={custom}
                 onChange={(e) => { setCustom(e.target.value); setSelected(null); }}
                 placeholder="Enter amount"
-                className="w-full bg-[#080c10] border border-[#1e2d42] rounded-xl pl-8 pr-4 py-3 text-sm text-[#e2eaf4] placeholder-[#3a4a5c] focus:outline-none focus:border-[#00e5ff]/50 transition-colors"
+                className="w-full bg-[#0a0a0f] border border-[#1c1c2a] rounded-xl pl-8 pr-4 py-3 text-sm text-[#fafafa] placeholder-[#3f3f50] focus:outline-none focus:border-[#7c3aed]/50 transition-colors"
               />
             </div>
           </div>
@@ -97,13 +97,13 @@ export default function DonatePage() {
           {error && (
             <p className="text-center text-xs text-red-400 font-mono mt-3">{error}</p>
           )}
-          <p className="text-center text-xs text-[#3a4a5c] font-mono mt-4">
+          <p className="text-center text-xs text-[#3f3f50] font-mono mt-4">
             Secured by Stripe · No account needed
           </p>
         </div>
 
-        <p className="text-center text-xs text-[#3a4a5c] mt-6">
-          <Link href="/" className="hover:text-[#6b7d95] transition-colors">← Back to home</Link>
+        <p className="text-center text-xs text-[#3f3f50] mt-6">
+          <Link href="/" className="hover:text-[#71717a] transition-colors">← Back to home</Link>
         </p>
       </div>
     </main>

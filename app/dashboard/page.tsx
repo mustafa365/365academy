@@ -58,17 +58,17 @@ export default async function DashboardPage() {
   const totalDone = user.lessonProgress.length;
 
   return (
-    <main className="min-h-screen bg-[#080c10] text-[#e2eaf4]">
+    <main className="min-h-screen bg-[#0a0a0f] text-[#fafafa]">
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#1e2d42] bg-[#080c10]/80 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#1c1c2a] bg-[#0a0a0f]/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-[#00e5ff] shadow-[0_0_12px_#00e5ff] animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-[#7c3aed] shadow-[0_0_12px_#7c3aed] animate-pulse" />
             <span className="font-bold text-lg tracking-tight">365Academy</span>
           </Link>
           <div className="flex items-center gap-6">
-            <Link href="/leaderboard" className="text-[#6b7d95] hover:text-white text-sm transition-colors">Leaderboard</Link>
-            <Link href="/profile" className="text-[#6b7d95] hover:text-white text-sm transition-colors">Profile</Link>
+            <Link href="/leaderboard" className="text-[#71717a] hover:text-white text-sm transition-colors">Leaderboard</Link>
+            <Link href="/profile" className="text-[#71717a] hover:text-white text-sm transition-colors">Profile</Link>
           </div>
         </div>
       </nav>
@@ -77,41 +77,41 @@ export default async function DashboardPage() {
 
         {/* Welcome header */}
         <div className="mb-8">
-          <p className="text-[#6b7d95] text-sm font-mono mb-1">// Dashboard</p>
+          <p className="text-[#71717a] text-sm font-mono mb-1">// Dashboard</p>
           <h1 className="text-3xl font-black tracking-tight">
-            Welcome back, <span className="text-[#00e5ff]">{user.name?.split(" ")[0] ?? "Learner"}</span>
+            Welcome back, <span className="text-[#a78bfa]">{user.name?.split(" ")[0] ?? "Learner"}</span>
           </h1>
         </div>
 
         {/* Stats row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Total XP", value: user.totalXP.toLocaleString(), icon: "⚡", color: "text-[#00e5ff]" },
+            { label: "Total XP", value: user.totalXP.toLocaleString(), icon: "⚡", color: "text-[#a78bfa]" },
             { label: "Level", value: `${level} · ${title}`, icon: "🏅", color: "text-[#7c3aed]" },
             { label: "Lessons Done", value: `${totalDone} / ${totalLessons}`, icon: "📚", color: "text-emerald-400" },
             { label: "Quizzes Passed", value: user.quizAttempts.filter(a => a.passed).length, icon: "✅", color: "text-yellow-400" },
           ].map((s) => (
-            <div key={s.label} className="bg-[#0e1420] border border-[#1e2d42] rounded-xl p-5">
+            <div key={s.label} className="bg-[#0d0d15] border border-[#1c1c2a] rounded-xl p-5">
               <div className="text-2xl mb-2">{s.icon}</div>
               <div className={`text-xl font-black ${s.color}`}>{s.value}</div>
-              <div className="text-[#6b7d95] text-xs font-mono mt-1">{s.label}</div>
+              <div className="text-[#71717a] text-xs font-mono mt-1">{s.label}</div>
             </div>
           ))}
         </div>
 
         {/* XP progress bar */}
-        <div className="bg-[#0e1420] border border-[#1e2d42] rounded-xl p-5 mb-8">
-          <div className="flex justify-between mb-2 text-xs font-mono text-[#6b7d95]">
+        <div className="bg-[#0d0d15] border border-[#1c1c2a] rounded-xl p-5 mb-8">
+          <div className="flex justify-between mb-2 text-xs font-mono text-[#71717a]">
             <span>Level {level} → Level {level + 1}</span>
             <span>{current} / {needed} XP</span>
           </div>
-          <div className="h-3 bg-[#080c10] rounded-full border border-[#1e2d42] overflow-hidden">
+          <div className="h-3 bg-[#0a0a0f] rounded-full border border-[#1c1c2a] overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#00e5ff] to-[#7c3aed] rounded-full transition-all duration-700"
+              className="h-full bg-gradient-to-r from-[#7c3aed] to-[#a855f7] rounded-full transition-all duration-700"
               style={{ width: `${percent}%` }}
             />
           </div>
-          <div className="text-[#3a4a5c] text-xs font-mono mt-2">{percent}% to next level</div>
+          <div className="text-[#3f3f50] text-xs font-mono mt-2">{percent}% to next level</div>
         </div>
 
         {/* Courses */}
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
           {courseStats.map(({ course, done, total, pct, nextLesson, quizzesPassed }) => (
             <div
               key={course.id}
-              className="bg-[#0e1420] border border-[#1e2d42] rounded-2xl overflow-hidden hover:border-[#00e5ff]/30 transition-all"
+              className="bg-[#0d0d15] border border-[#1c1c2a] rounded-2xl overflow-hidden hover:border-[#7c3aed]/30 transition-all"
             >
               {/* Color accent top bar */}
               <div className="h-1 w-full" style={{ background: course.color }} />
@@ -130,17 +130,17 @@ export default async function DashboardPage() {
                   <span className="text-4xl">{course.icon}</span>
                   <div>
                     <h3 className="font-black text-lg leading-tight">{course.title}</h3>
-                    <p className="text-[#6b7d95] text-xs">{course.sections.length} sections · {total} lessons</p>
+                    <p className="text-[#71717a] text-xs">{course.sections.length} sections · {total} lessons</p>
                   </div>
                 </div>
 
                 {/* Progress */}
                 <div className="mb-4">
                   <div className="flex justify-between text-xs font-mono mb-1.5">
-                    <span className="text-[#6b7d95]">{done} / {total} lessons</span>
+                    <span className="text-[#71717a]">{done} / {total} lessons</span>
                     <span style={{ color: course.color }}>{pct}%</span>
                   </div>
-                  <div className="h-2 bg-[#080c10] rounded-full border border-[#1e2d42] overflow-hidden">
+                  <div className="h-2 bg-[#0a0a0f] rounded-full border border-[#1c1c2a] overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-700"
                       style={{ width: `${pct}%`, background: course.color }}
@@ -148,7 +148,7 @@ export default async function DashboardPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-[#6b7d95] font-mono mb-5">
+                <div className="flex items-center justify-between text-xs text-[#71717a] font-mono mb-5">
                   <span>✅ {quizzesPassed}/{course.sections.length} quizzes passed</span>
                   <span style={{ color: course.color }}>+{course.totalXP} XP available</span>
                 </div>
@@ -170,7 +170,7 @@ export default async function DashboardPage() {
                   )}
                   <Link
                     href={`/courses/${course.slug}`}
-                    className="px-4 py-2.5 border border-[#1e2d42] rounded-xl text-sm text-[#6b7d95] hover:border-[#00e5ff]/40 hover:text-white transition-colors"
+                    className="px-4 py-2.5 border border-[#1c1c2a] rounded-xl text-sm text-[#71717a] hover:border-[#7c3aed]/40 hover:text-white transition-colors"
                   >
                     Overview
                   </Link>
@@ -190,11 +190,11 @@ export default async function DashboardPage() {
             <Link
               key={item.href}
               href={item.href}
-              className="bg-[#0e1420] border border-[#1e2d42] rounded-xl p-5 hover:border-[#00e5ff]/30 transition-all group"
+              className="bg-[#0d0d15] border border-[#1c1c2a] rounded-xl p-5 hover:border-[#7c3aed]/30 transition-all group"
             >
               <div className="text-2xl mb-3">{item.icon}</div>
-              <div className="font-bold mb-1 group-hover:text-[#00e5ff] transition-colors">{item.title}</div>
-              <div className="text-[#6b7d95] text-xs">{item.desc}</div>
+              <div className="font-bold mb-1 group-hover:text-[#a78bfa] transition-colors">{item.title}</div>
+              <div className="text-[#71717a] text-xs">{item.desc}</div>
             </Link>
           ))}
         </div>
