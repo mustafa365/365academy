@@ -1,0 +1,21 @@
+/* App-specific styles */
+
+/* Ensure smooth scroll behavior is disabled for GSAP */
+html {
+  scroll-behavior: auto !important;
+}
+
+/* Pin spacer styling */
+.pin-spacer {
+  background: transparent !important;
+}
+
+/* Ensure sections stack properly */
+section {
+  will-change: transform;
+}
+
+/* Prevent horizontal overflow */
+body {
+  overflow-x: hidden;
+}
